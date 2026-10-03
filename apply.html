@@ -1,0 +1,6152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Applikart — Find & Apply to Jobs</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Flutterwave Inline -->
+  <script src="https://checkout.flutterwave.com/v3.js"></script>
+
+  <style>
+
+    /* =========================================
+       RESET
+    ========================================== */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      color: #101828;
+      background: #f8fafc;
+      line-height: 1.6;
+    }
+
+    button,
+    input,
+    select {
+      font-family: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+
+    /* =========================================
+       VARIABLES
+    ========================================== */
+
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #eff6ff;
+
+      --text: #101828;
+      --muted: #667085;
+
+      --border: #e4e7ec;
+      --soft: #f8fafc;
+
+      --success: #16a34a;
+      --danger: #dc2626;
+
+      --white: #ffffff;
+
+      --radius: 16px;
+
+      --container: 1120px;
+    }
+
+
+    /* =========================================
+       NAVBAR
+    ========================================== */
+
+    .navbar {
+      height: 74px;
+
+      background: rgba(255, 255, 255, 0.96);
+
+      backdrop-filter: blur(15px);
+
+      border-bottom: 1px solid var(--border);
+
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-inner {
+      width: min(100% - 40px, var(--container));
+      height: 100%;
+      margin: auto;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+
+      display: grid;
+      place-items: center;
+
+      color: white;
+      background: var(--primary);
+
+      border-radius: 10px;
+    }
+
+    .logo-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+
+      color: var(--muted);
+
+      font-size: 13px;
+      font-weight: 600;
+
+      transition: color 0.2s ease;
+    }
+
+    .back-home:hover {
+      color: var(--primary);
+    }
+
+    .back-home svg {
+      width: 16px;
+      height: 16px;
+    }
+
+
+    /* =========================================
+       PAGE HEADER
+    ========================================== */
+
+    .page-header {
+      background: #ffffff;
+
+      border-bottom: 1px solid var(--border);
+
+      padding: 48px 20px 42px;
+    }
+
+    .page-header-inner {
+      width: min(100%, var(--container));
+      margin: auto;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+      font-weight: 600;
+
+      margin-bottom: 18px;
+    }
+
+    .breadcrumb span:last-child {
+      color: var(--text);
+    }
+
+    .breadcrumb svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    .page-header h1 {
+      font-size: clamp(30px, 4vw, 44px);
+
+      line-height: 1.15;
+
+      letter-spacing: -1.5px;
+
+      margin-bottom: 10px;
+    }
+
+    .page-header p {
+      color: var(--muted);
+
+      font-size: 14px;
+
+      max-width: 630px;
+    }
+
+
+    /* =========================================
+       MAIN
+    ========================================== */
+
+    .main {
+      width: min(100% - 40px, var(--container));
+
+      margin: 0 auto;
+
+      padding: 45px 0 90px;
+    }
+
+
+    /* =========================================
+       PROGRESS
+    ========================================== */
+
+    .progress {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 10px;
+
+      margin-bottom: 30px;
+    }
+
+    .progress-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      padding: 13px 15px;
+
+      background: #ffffff;
+
+      border: 1px solid var(--border);
+
+      border-radius: 12px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .progress-number {
+      width: 25px;
+      height: 25px;
+
+      display: grid;
+      place-items: center;
+
+      flex-shrink: 0;
+
+      color: var(--primary);
+
+      background: var(--primary-light);
+
+      border-radius: 50%;
+
+      font-size: 10px;
+    }
+
+    .progress-item.active {
+      color: var(--primary);
+
+      border-color: #bfdbfe;
+
+      background: #f8fbff;
+    }
+
+
+    /* =========================================
+       FORM CARD
+    ========================================== */
+
+    .form-card {
+      background: #ffffff;
+
+      border: 1px solid var(--border);
+
+      border-radius: 20px;
+
+      padding: 30px;
+
+      box-shadow:
+        0 8px 30px rgba(16, 24, 40, 0.04);
+
+      margin-bottom: 30px;
+    }
+
+    .card-header {
+      margin-bottom: 26px;
+    }
+
+    .card-header h2 {
+      font-size: 19px;
+
+      letter-spacing: -0.4px;
+
+      margin-bottom: 6px;
+    }
+
+    .card-header p {
+      color: var(--muted);
+
+      font-size: 12px;
+    }
+
+
+    /* =========================================
+       FORM SECTIONS
+    ========================================== */
+
+    .form-section {
+      margin-bottom: 28px;
+    }
+
+    .form-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-section-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+
+      margin-bottom: 15px;
+    }
+
+    .form-section-title-icon {
+      width: 30px;
+      height: 30px;
+
+      display: grid;
+      place-items: center;
+
+      color: var(--primary);
+
+      background: var(--primary-light);
+
+      border-radius: 8px;
+    }
+
+    .form-section-title-icon svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .form-section-title h3 {
+      font-size: 13px;
+    }
+
+
+    /* =========================================
+       RESUME UPLOAD
+    ========================================== */
+
+    .upload-box {
+      position: relative;
+
+      border: 1.5px dashed #cbd5e1;
+
+      border-radius: 14px;
+
+      background: #f8fafc;
+
+      padding: 25px;
+
+      text-align: center;
+
+      transition: 0.2s ease;
+    }
+
+    .upload-box:hover,
+    .upload-box.dragging {
+      border-color: var(--primary);
+
+      background: #f8fbff;
+    }
+
+    .upload-box.has-file {
+      border-style: solid;
+
+      border-color: #bfdbfe;
+
+      background: #f8fbff;
+    }
+
+    .upload-input {
+      position: absolute;
+
+      inset: 0;
+
+      opacity: 0;
+
+      cursor: pointer;
+    }
+
+    .upload-icon {
+      width: 44px;
+      height: 44px;
+
+      display: grid;
+      place-items: center;
+
+      margin: 0 auto 12px;
+
+      color: var(--primary);
+
+      background: var(--primary-light);
+
+      border-radius: 11px;
+    }
+
+    .upload-icon svg {
+      width: 21px;
+      height: 21px;
+    }
+
+    .upload-title {
+      font-size: 13px;
+      font-weight: 700;
+
+      margin-bottom: 4px;
+    }
+
+    .upload-description {
+      color: var(--muted);
+
+      font-size: 10px;
+
+      margin-bottom: 7px;
+    }
+
+    .upload-format {
+      color: #98a2b3;
+
+      font-size: 9px;
+    }
+
+    .selected-file {
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+
+      margin-top: 14px;
+
+      color: var(--success);
+
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .selected-file svg {
+      width: 16px;
+      height: 16px;
+    }
+
+
+    /* =========================================
+       FORM GRID
+    ========================================== */
+
+    .form-grid {
+      display: grid;
+
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 18px;
+    }
+
+    .form-group {
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 7px;
+
+      position: relative;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      color: #344054;
+
+      font-size: 11px;
+
+      font-weight: 700;
+    }
+
+    .required {
+      color: var(--danger);
+    }
+
+    .input,
+    .select {
+      width: 100%;
+
+      height: 45px;
+
+      padding: 0 13px;
+
+      color: var(--text);
+
+      background: #ffffff;
+
+      border: 1px solid #d0d5dd;
+
+      border-radius: 9px;
+
+      outline: none;
+
+      font-size: 12px;
+
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .input::placeholder {
+      color: #98a2b3;
+    }
+
+    .input:focus,
+    .select:focus {
+      border-color: var(--primary);
+
+      box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.08);
+    }
+
+    .select {
+      appearance: none;
+
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23667085' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+
+      background-repeat: no-repeat;
+
+      background-position: right 12px center;
+
+      padding-right: 38px;
+    }
+
+
+    /* =========================================
+       CUSTOM JOB TITLE DROPDOWN
+    ========================================== */
+
+    .job-dropdown {
+      position: relative;
+    }
+
+    .job-dropdown-button {
+      width: 100%;
+      height: 45px;
+
+      padding: 0 13px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      background: #ffffff;
+
+      border: 1px solid #d0d5dd;
+
+      border-radius: 9px;
+
+      color: #98a2b3;
+
+      font-size: 12px;
+
+      text-align: left;
+
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .job-dropdown-button.selected {
+      color: var(--text);
+    }
+
+    .job-dropdown-button:focus,
+    .job-dropdown.open .job-dropdown-button {
+      outline: none;
+
+      border-color: var(--primary);
+
+      box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.08);
+    }
+
+    .job-dropdown-button svg {
+      width: 16px;
+      height: 16px;
+
+      flex-shrink: 0;
+
+      color: #667085;
+
+      transition: transform 0.2s ease;
+    }
+
+    .job-dropdown.open .job-dropdown-button svg {
+      transform: rotate(180deg);
+    }
+
+    .job-dropdown-menu {
+      display: none;
+
+      position: absolute;
+
+      top: calc(100% + 7px);
+
+      left: 0;
+      right: 0;
+
+      z-index: 100;
+
+      background: #ffffff;
+
+      border: 1px solid var(--border);
+
+      border-radius: 12px;
+
+      padding: 8px;
+
+      box-shadow:
+        0 15px 40px rgba(16, 24, 40, 0.12);
+    }
+
+    .job-dropdown.open .job-dropdown-menu {
+      display: block;
+    }
+
+    .job-search-wrapper {
+      position: relative;
+
+      margin-bottom: 7px;
+    }
+
+    .job-search-wrapper svg {
+      position: absolute;
+
+      left: 11px;
+      top: 50%;
+
+      width: 15px;
+      height: 15px;
+
+      transform: translateY(-50%);
+
+      color: #98a2b3;
+
+      pointer-events: none;
+    }
+
+    .job-search-input {
+      width: 100%;
+
+      height: 40px;
+
+      padding: 0 12px 0 34px;
+
+      border: 1px solid #d0d5dd;
+
+      border-radius: 8px;
+
+      outline: none;
+
+      color: var(--text);
+
+      font-size: 11px;
+    }
+
+    .job-search-input:focus {
+      border-color: var(--primary);
+    }
+
+    .job-options {
+      max-height: 245px;
+
+      overflow-y: auto;
+    }
+
+    .job-option {
+      width: 100%;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      gap: 12px;
+
+      padding: 10px 11px;
+
+      border: none;
+
+      background: transparent;
+
+      border-radius: 8px;
+
+      color: var(--text);
+
+      text-align: left;
+
+      font-size: 11px;
+
+      transition: background 0.15s ease;
+    }
+
+    .job-option:hover {
+      background: var(--primary-light);
+    }
+
+    .job-option-name {
+      min-width: 0;
+
+      white-space: nowrap;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
+    }
+
+    .no-job-options {
+      padding: 18px 10px;
+
+      text-align: center;
+
+      color: var(--muted);
+
+      font-size: 10px;
+    }
+
+
+    /* =========================================
+       SELECTED JOB HINT
+    ========================================== */
+
+    .selected-job-hint {
+      display: none;
+
+      margin-top: 7px;
+
+      color: var(--primary);
+
+      font-size: 9px;
+
+      font-weight: 600;
+    }
+
+    .selected-job-hint.show {
+      display: block;
+    }
+
+
+    /* =========================================
+       SOURCE MULTI SELECT
+    ========================================== */
+
+    .source-dropdown {
+      position: relative;
+    }
+
+    .source-dropdown-button {
+      width: 100%;
+      height: 45px;
+
+      padding: 0 13px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      background: #ffffff;
+
+      border: 1px solid #d0d5dd;
+
+      border-radius: 9px;
+
+      color: #98a2b3;
+
+      font-size: 12px;
+
+      text-align: left;
+
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .source-dropdown-button.selected {
+      color: var(--text);
+    }
+
+    .source-dropdown.open .source-dropdown-button {
+      border-color: var(--primary);
+
+      box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.08);
+    }
+
+    .source-button-content {
+      min-width: 0;
+
+      overflow: hidden;
+
+      white-space: nowrap;
+
+      text-overflow: ellipsis;
+    }
+
+    .source-dropdown-button svg {
+      width: 16px;
+      height: 16px;
+
+      flex-shrink: 0;
+
+      color: #667085;
+
+      transition: transform 0.2s ease;
+    }
+
+    .source-dropdown.open
+    .source-dropdown-button svg {
+      transform: rotate(180deg);
+    }
+
+    .source-dropdown-menu {
+      display: none;
+
+      position: absolute;
+
+      top: calc(100% + 7px);
+
+      left: 0;
+      right: 0;
+
+      z-index: 100;
+
+      padding: 8px;
+
+      background: #ffffff;
+
+      border: 1px solid var(--border);
+
+      border-radius: 12px;
+
+      box-shadow:
+        0 15px 40px rgba(16, 24, 40, 0.12);
+    }
+
+    .source-dropdown.open
+    .source-dropdown-menu {
+      display: block;
+    }
+
+    .source-option {
+      width: 100%;
+
+      display: flex;
+      align-items: center;
+
+      gap: 10px;
+
+      padding: 10px 9px;
+
+      border: none;
+
+      border-radius: 8px;
+
+      background: transparent;
+
+      color: var(--text);
+
+      text-align: left;
+
+      font-size: 11px;
+
+      transition: background 0.15s ease;
+    }
+
+    .source-option:hover {
+      background: var(--primary-light);
+    }
+
+    .source-option input {
+      width: 15px;
+      height: 15px;
+
+      accent-color: var(--primary);
+
+      flex-shrink: 0;
+    }
+
+    .source-option-label {
+      flex: 1;
+    }
+
+    .source-divider {
+      height: 1px;
+
+      background: var(--border);
+
+      margin: 5px 4px;
+    }
+
+    .source-selection-info {
+      padding: 8px 9px 3px;
+
+      color: #98a2b3;
+
+      font-size: 9px;
+
+      font-weight: 600;
+    }
+
+
+    /* =========================================
+       SEARCH BUTTON
+    ========================================== */
+
+    .search-area {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+
+      padding-top: 24px;
+
+      border-top: 1px solid var(--border);
+    }
+
+    .search-help {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+
+      max-width: 430px;
+    }
+
+    .search-help svg {
+      width: 15px;
+      height: 15px;
+
+      flex-shrink: 0;
+
+      margin-top: 1px;
+
+      color: var(--primary);
+    }
+
+    .search-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+
+      min-width: 155px;
+
+      height: 46px;
+
+      padding: 0 20px;
+
+      color: #ffffff;
+
+      background: var(--primary);
+
+      border: none;
+
+      border-radius: 9px;
+
+      font-size: 12px;
+
+      font-weight: 700;
+
+      transition: 0.2s ease;
+    }
+
+    .search-button:hover:not(:disabled) {
+      background: var(--primary-dark);
+
+      transform: translateY(-1px);
+
+      box-shadow:
+        0 8px 20px rgba(37, 99, 235, 0.18);
+    }
+
+    .search-button:disabled {
+      opacity: 0.75;
+
+      transform: none;
+
+      box-shadow: none;
+    }
+
+    .search-button svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .button-spinner {
+      width: 16px;
+      height: 16px;
+
+      border: 2px solid rgba(255, 255, 255, 0.35);
+
+      border-top-color: #ffffff;
+
+      border-radius: 50%;
+
+      animation: spin 0.7s linear infinite;
+    }
+
+
+    /* =========================================
+       RESULTS
+    ========================================== */
+
+    .results-section {
+      display: none;
+    }
+
+    .results-section.show {
+      display: block;
+    }
+
+    .results-card {
+      background: #ffffff;
+
+      border: 1px solid var(--border);
+
+      border-radius: 20px;
+
+      overflow: hidden;
+
+      box-shadow:
+        0 8px 30px rgba(16, 24, 40, 0.04);
+    }
+
+
+    /* =========================================
+       LOADING STATE
+    ========================================== */
+
+    .results-loading {
+      display: none;
+
+      min-height: 250px;
+
+      padding: 45px 25px;
+
+      align-items: center;
+      justify-content: center;
+
+      flex-direction: column;
+
+      text-align: center;
+    }
+
+    .results-loading.show {
+      display: flex;
+    }
+
+    .loading-spinner {
+      width: 42px;
+      height: 42px;
+
+      border: 3px solid #dbeafe;
+
+      border-top-color: var(--primary);
+
+      border-radius: 50%;
+
+      margin-bottom: 17px;
+
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .results-loading h3 {
+      font-size: 14px;
+
+      margin-bottom: 5px;
+    }
+
+    .results-loading p {
+      color: var(--muted);
+
+      font-size: 10px;
+    }
+
+
+    /* =========================================
+       RESULTS CONTENT
+    ========================================== */
+
+    .results-content {
+      display: none;
+    }
+
+    .results-content.show {
+      display: block;
+    }
+
+    .results-top {
+      padding: 28px;
+
+      border-bottom: 1px solid var(--border);
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 25px;
+    }
+
+    .results-count {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .count-icon {
+      width: 48px;
+      height: 48px;
+
+      display: grid;
+      place-items: center;
+
+      color: var(--primary);
+
+      background: var(--primary-light);
+
+      border-radius: 11px;
+
+      flex-shrink: 0;
+    }
+
+    .count-icon svg {
+      width: 21px;
+      height: 21px;
+    }
+
+    .results-count strong {
+      display: block;
+
+      font-size: 22px;
+
+      letter-spacing: -0.5px;
+
+      line-height: 1.2;
+    }
+
+    .results-count span {
+      display: block;
+
+      color: var(--muted);
+
+      font-size: 10px;
+
+      margin-top: 4px;
+    }
+
+    .results-summary {
+      color: var(--muted);
+
+      font-size: 10px;
+
+      text-align: right;
+
+      max-width: 400px;
+    }
+
+
+    /* =========================================
+       SEARCH SUMMARY
+    ========================================== */
+
+    .search-summary {
+      padding: 22px 28px;
+
+      background: #fbfcfe;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .summary-label {
+      color: #98a2b3;
+
+      font-size: 9px;
+
+      font-weight: 700;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.6px;
+
+      margin-bottom: 10px;
+    }
+
+    .summary-title {
+      font-size: 15px;
+
+      font-weight: 800;
+
+      letter-spacing: -0.2px;
+
+      margin-bottom: 12px;
+    }
+
+    .filter-tags {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 7px;
+    }
+
+    .filter-tag {
+      display: inline-flex;
+      align-items: center;
+
+      padding: 6px 9px;
+
+      color: #475467;
+
+      background: #ffffff;
+
+      border: 1px solid #e4e7ec;
+
+      border-radius: 999px;
+
+      font-size: 9px;
+
+      font-weight: 600;
+    }
+
+    .filter-tag.source {
+      color: var(--primary);
+
+      background: var(--primary-light);
+
+      border-color: #dbeafe;
+    }
+
+
+    /* =========================================
+       PURCHASE SECTION
+    ========================================== */
+
+    .purchase-section {
+      padding: 25px 28px;
+
+      border-bottom: 1px solid var(--border);
+
+      background: #ffffff;
+    }
+
+    .purchase-header {
+      margin-bottom: 17px;
+    }
+
+    .purchase-header h3 {
+      font-size: 14px;
+
+      margin-bottom: 4px;
+    }
+
+    .purchase-header p {
+      color: var(--muted);
+
+      font-size: 10px;
+    }
+
+    .purchase-layout {
+      display: grid;
+
+      grid-template-columns: 1fr auto;
+
+      gap: 18px;
+
+      align-items: center;
+    }
+
+    .quantity-control {
+      display: inline-flex;
+
+      align-items: center;
+
+      width: fit-content;
+
+      min-width: 250px;
+
+      height: 50px;
+
+      border: 1px solid #d0d5dd;
+
+      border-radius: 11px;
+
+      overflow: hidden;
+
+      background: #ffffff;
+    }
+
+    .quantity-button {
+      width: 50px;
+      height: 100%;
+
+      display: grid;
+      place-items: center;
+
+      border: none;
+
+      background: #f8fafc;
+
+      color: var(--text);
+
+      font-size: 20px;
+
+      transition: 0.2s ease;
+    }
+
+    .quantity-button:hover:not(:disabled) {
+      background: var(--primary-light);
+
+      color: var(--primary);
+    }
+
+    .quantity-button:disabled {
+      opacity: 0.35;
+    }
+
+    .quantity-display {
+      min-width: 148px;
+
+      text-align: center;
+
+      font-size: 12px;
+
+      font-weight: 800;
+
+      color: var(--text);
+    }
+
+    .quantity-display span {
+      display: block;
+
+      color: var(--muted);
+
+      font-size: 8px;
+
+      font-weight: 600;
+
+      margin-top: 1px;
+    }
+
+    .purchase-price {
+      text-align: right;
+
+      min-width: 150px;
+    }
+
+    .purchase-price-label {
+      color: var(--muted);
+
+      font-size: 9px;
+
+      margin-bottom: 2px;
+    }
+
+    .purchase-price-value {
+      color: var(--text);
+
+      font-size: 22px;
+
+      font-weight: 800;
+
+      letter-spacing: -0.5px;
+    }
+
+    .purchase-note {
+      margin-top: 10px;
+
+      color: #98a2b3;
+
+      font-size: 9px;
+    }
+
+
+    /* =========================================
+       RESULTS FOOTER
+    ========================================== */
+
+    .results-footer {
+      padding: 24px 28px;
+
+      background: #f8fbff;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+    }
+
+    .apply-message {
+      display: flex;
+      align-items: flex-start;
+
+      gap: 9px;
+    }
+
+    .apply-message svg {
+      width: 17px;
+      height: 17px;
+
+      color: var(--primary);
+
+      flex-shrink: 0;
+
+      margin-top: 1px;
+    }
+
+    .apply-message strong {
+      display: block;
+
+      font-size: 11px;
+
+      margin-bottom: 2px;
+    }
+
+    .apply-message span {
+      display: block;
+
+      color: var(--muted);
+
+      font-size: 9px;
+    }
+
+    .apply-all-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+
+      min-width: 225px;
+
+      height: 45px;
+
+      padding: 0 18px;
+
+      color: #ffffff;
+
+      background: var(--primary);
+
+      border: none;
+
+      border-radius: 9px;
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+      transition: 0.2s ease;
+    }
+
+    .apply-all-btn:hover:not(:disabled) {
+      background: var(--primary-dark);
+
+      transform: translateY(-1px);
+
+      box-shadow:
+        0 8px 20px rgba(37, 99, 235, 0.18);
+    }
+
+    .apply-all-btn:disabled {
+      opacity: 0.65;
+
+      transform: none;
+
+      box-shadow: none;
+    }
+
+    .apply-all-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+
+    /* =========================================
+       PAYMENT STATUS
+    ========================================== */
+
+    .payment-status {
+      display: none;
+
+      padding: 13px 28px;
+
+      color: var(--muted);
+
+      background: #fbfcfe;
+
+      border-bottom: 1px solid var(--border);
+
+      font-size: 9px;
+
+      text-align: center;
+    }
+
+    .payment-status.show {
+      display: block;
+    }
+
+
+    /* =========================================
+       SUCCESS MODAL
+    ========================================== */
+
+    .modal-overlay {
+      display: none;
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 2000;
+
+      padding: 20px;
+
+      background: rgba(16, 24, 40, 0.55);
+
+      backdrop-filter: blur(4px);
+
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal {
+      width: min(100%, 440px);
+
+      background: #ffffff;
+
+      border-radius: 20px;
+
+      padding: 32px;
+
+      text-align: center;
+
+      box-shadow:
+        0 25px 80px rgba(16, 24, 40, 0.2);
+
+      animation: modalIn 0.25s ease;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .modal-icon {
+      width: 60px;
+      height: 60px;
+
+      display: grid;
+      place-items: center;
+
+      margin: 0 auto 18px;
+
+      color: var(--success);
+
+      background: #dcfce7;
+
+      border-radius: 50%;
+    }
+
+    .modal-icon svg {
+      width: 27px;
+      height: 27px;
+    }
+
+    .modal h2 {
+      font-size: 21px;
+
+      margin-bottom: 8px;
+    }
+
+    .modal p {
+      color: var(--muted);
+
+      font-size: 12px;
+
+      line-height: 1.7;
+
+      margin-bottom: 22px;
+    }
+
+    .modal-close {
+      width: 100%;
+
+      height: 44px;
+
+      border: none;
+
+      border-radius: 9px;
+
+      color: #ffffff;
+
+      background: var(--primary);
+
+      font-size: 11px;
+
+      font-weight: 700;
+    }
+
+
+    /* =========================================
+       FOOTER
+    ========================================== */
+
+    footer {
+      padding: 25px 20px;
+
+      border-top: 1px solid var(--border);
+
+      background: #ffffff;
+    }
+
+    .footer-inner {
+      width: min(100%, var(--container));
+
+      margin: auto;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      color: var(--muted);
+
+      font-size: 10px;
+    }
+
+
+    /* =========================================
+       RESPONSIVE
+    ========================================== */
+
+    @media (max-width: 760px) {
+
+      .nav-inner {
+        width: min(100% - 28px, var(--container));
+      }
+
+      .back-home {
+        font-size: 11px;
+      }
+
+      .page-header {
+        padding: 35px 15px;
+      }
+
+      .main {
+        width: min(100% - 28px, var(--container));
+
+        padding-top: 28px;
+      }
+
+      .progress {
+        grid-template-columns: 1fr;
+      }
+
+      .form-card {
+        padding: 22px 18px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: auto;
+      }
+
+      .search-area {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-button {
+        width: 100%;
+      }
+
+      .results-top {
+        padding: 20px;
+
+        align-items: flex-start;
+
+        flex-direction: column;
+      }
+
+      .results-summary {
+        text-align: left;
+
+        max-width: none;
+      }
+
+      .search-summary {
+        padding: 20px;
+      }
+
+      .purchase-section {
+        padding: 22px 20px;
+      }
+
+      .purchase-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .quantity-control {
+        width: 100%;
+      }
+
+      .quantity-display {
+        flex: 1;
+      }
+
+      .purchase-price {
+        text-align: left;
+      }
+
+      .results-footer {
+        padding: 20px;
+
+        flex-direction: column;
+
+        align-items: stretch;
+      }
+
+      .apply-all-btn {
+        width: 100%;
+      }
+
+      .payment-status {
+        padding: 13px 20px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+
+        gap: 8px;
+
+        text-align: center;
+      }
+
+    }
+
+
+    @media (max-width: 430px) {
+
+      .logo {
+        font-size: 18px;
+      }
+
+      .logo-icon {
+        width: 33px;
+        height: 33px;
+      }
+
+      .back-home span {
+        display: none;
+      }
+
+      .page-header h1 {
+        font-size: 30px;
+      }
+
+      .page-header p {
+        font-size: 12px;
+      }
+
+      .upload-box {
+        padding: 22px 15px;
+      }
+
+      .results-count strong {
+        font-size: 19px;
+      }
+
+      .filter-tags {
+        gap: 6px;
+      }
+
+      .filter-tag {
+        font-size: 8px;
+      }
+
+      .results-loading {
+        min-height: 220px;
+      }
+
+      .quantity-display {
+        min-width: 0;
+      }
+
+      .quantity-button {
+        width: 46px;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =========================================
+       NAVBAR
+  ========================================== -->
+
+  <header class="navbar">
+
+    <div class="nav-inner">
+
+      <a href="index.html" class="logo">
+
+        <span class="logo-icon">
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 4v16"></path>
+            <path d="M5 4h9a4 4 0 0 1 0 8H5"></path>
+          </svg>
+
+        </span>
+
+        Applikart
+
+      </a>
+
+
+      <a href="index.html" class="back-home">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m15 18-6-6 6-6"></path>
+        </svg>
+
+        <span>Back to home</span>
+
+      </a>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================================
+       PAGE HEADER
+  ========================================== -->
+
+  <section class="page-header">
+
+    <div class="page-header-inner">
+
+      <div class="breadcrumb">
+
+        <span>Home</span>
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="m9 18 6-6-6-6"></path>
+        </svg>
+
+        <span>Find & Apply</span>
+
+      </div>
+
+
+      <h1>
+        Find jobs and apply to them all at once.
+      </h1>
+
+      <p>
+        Upload your resume, choose the job you want,
+        set your preferences, and discover thousands
+        of matching opportunities.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================
+       MAIN
+  ========================================== -->
+
+  <main class="main">
+
+
+    <!-- =======================================
+         PROGRESS
+    ======================================== -->
+
+    <div class="progress">
+
+      <div class="progress-item active">
+
+        <span class="progress-number">
+          1
+        </span>
+
+        Upload resume
+
+      </div>
+
+
+      <div class="progress-item active">
+
+        <span class="progress-number">
+          2
+        </span>
+
+        Search jobs
+
+      </div>
+
+
+      <div class="progress-item active">
+
+        <span class="progress-number">
+          3
+        </span>
+
+        Apply to jobs
+
+      </div>
+
+    </div>
+
+
+    <!-- =======================================
+         SEARCH FORM
+    ======================================== -->
+
+    <div class="form-card">
+
+      <div class="card-header">
+
+        <h2>
+          Tell us what you're looking for
+        </h2>
+
+        <p>
+          Choose a job title and set your preferences
+          to find matching opportunities.
+        </p>
+
+      </div>
+
+
+      <form id="jobSearchForm">
+
+
+        <!-- ===================================
+             RESUME
+        ==================================== -->
+
+        <div class="form-section">
+
+          <div class="form-section-title">
+
+            <div class="form-section-title-icon">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <path d="M14 2v6h6"></path>
+                <path d="M8 13h8"></path>
+                <path d="M8 17h5"></path>
+              </svg>
+
+            </div>
+
+            <h3>
+              Your resume
+            </h3>
+
+          </div>
+
+
+          <div class="upload-box" id="uploadBox">
+
+            <input
+              type="file"
+              id="resume"
+              class="upload-input"
+              accept=".pdf,.doc,.docx"
+              required
+            />
+
+
+            <div class="upload-icon">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+
+            </div>
+
+
+            <div class="upload-title">
+              Click to upload your resume
+            </div>
+
+            <div class="upload-description">
+              Or drag and drop your resume here
+            </div>
+
+            <div class="upload-format">
+              PDF, DOC or DOCX · Maximum 5MB
+            </div>
+
+
+            <div class="selected-file" id="selectedFile">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+
+              <span id="fileName">
+                Resume selected
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ===================================
+             JOB SEARCH
+        ==================================== -->
+
+        <div class="form-section">
+
+          <div class="form-section-title">
+
+            <div class="form-section-title-icon">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m20 20-4-4"></path>
+              </svg>
+
+            </div>
+
+            <h3>
+              Job search
+            </h3>
+
+          </div>
+
+
+          <div class="form-grid">
+
+
+            <!-- =================================
+                 JOB TITLE
+            ================================== -->
+
+            <div class="form-group full">
+
+              <label>
+                Job title <span class="required">*</span>
+              </label>
+
+
+              <div
+                class="job-dropdown"
+                id="jobDropdown"
+              >
+
+                <button
+                  type="button"
+                  class="job-dropdown-button"
+                  id="jobDropdownButton"
+                >
+
+                  <span id="selectedJobText">
+                    Search or select a job title
+                  </span>
+
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m6 9 6 6 6-6"></path>
+                  </svg>
+
+                </button>
+
+
+                <div
+                  class="job-dropdown-menu"
+                  id="jobDropdownMenu"
+                >
+
+                  <div class="job-search-wrapper">
+
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="11" cy="11" r="7"></circle>
+                      <path d="m20 20-4-4"></path>
+                    </svg>
+
+                    <input
+                      type="text"
+                      id="jobSearchInput"
+                      class="job-search-input"
+                      placeholder="Search job titles..."
+                      autocomplete="off"
+                    />
+
+                  </div>
+
+
+                  <div
+                    class="job-options"
+                    id="jobOptions"
+                  ></div>
+
+                </div>
+
+              </div>
+
+
+              <div
+                class="selected-job-hint"
+                id="selectedJobHint"
+              >
+                Select a job title from the available list.
+              </div>
+
+            </div>
+
+
+            <!-- =================================
+                 LOCATION
+            ================================== -->
+
+            <div class="form-group">
+
+              <label for="location">
+                Location
+              </label>
+
+              <select
+                id="location"
+                class="select"
+              ></select>
+
+            </div>
+
+
+            <!-- =================================
+                 JOB TYPE
+            ================================== -->
+
+            <div class="form-group">
+
+              <label for="jobType">
+                Job type
+              </label>
+
+              <select
+                id="jobType"
+                class="select"
+              ></select>
+
+            </div>
+
+
+            <!-- =================================
+                 EXPERIENCE
+            ================================== -->
+
+            <div class="form-group">
+
+              <label for="experience">
+                Experience level
+              </label>
+
+              <select
+                id="experience"
+                class="select"
+              ></select>
+
+            </div>
+
+
+            <!-- =================================
+                 WORK ARRANGEMENT
+            ================================== -->
+
+            <div class="form-group">
+
+              <label for="arrangement">
+                Work arrangement
+              </label>
+
+              <select
+                id="arrangement"
+                class="select"
+              ></select>
+
+            </div>
+
+
+            <!-- =================================
+                 JOB SOURCES
+            ================================== -->
+
+            <div class="form-group full">
+
+              <label>
+                Job sources
+              </label>
+
+
+              <div
+                class="source-dropdown"
+                id="sourceDropdown"
+              >
+
+                <button
+                  type="button"
+                  class="source-dropdown-button"
+                  id="sourceDropdownButton"
+                >
+
+                  <span
+                    class="source-button-content"
+                    id="sourceButtonText"
+                  >
+                    All job sources
+                  </span>
+
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m6 9 6 6 6-6"></path>
+                  </svg>
+
+                </button>
+
+
+                <div
+                  class="source-dropdown-menu"
+                  id="sourceDropdownMenu"
+                >
+
+                  <div id="sourceOptions"></div>
+
+                  <div class="source-divider"></div>
+
+                  <div
+                    class="source-selection-info"
+                    id="sourceSelectionInfo"
+                  >
+                    All sources selected
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ===================================
+             SEARCH ACTION
+        ==================================== -->
+
+        <div class="search-area">
+
+          <div class="search-help">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 16v-4"></path>
+              <path d="M12 8h.01"></path>
+            </svg>
+
+            <span>
+              We'll show you how many jobs match your search before
+              you apply. You can then choose how many jobs you'd like
+              to apply to and pay securely to finalize your application.
+            </span>
+
+          </div>
+
+
+          <button
+            type="submit"
+            class="search-button"
+            id="searchButton"
+          >
+
+            <svg
+              class="search-button-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m20 20-4-4"></path>
+            </svg>
+
+            <span id="searchButtonText">
+              Search Jobs
+            </span>
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+
+    <!-- =======================================
+         RESULTS
+    ======================================== -->
+
+    <section
+      class="results-section"
+      id="resultsSection"
+    >
+
+      <div class="results-card">
+
+
+        <!-- ===================================
+             LOADING
+        ==================================== -->
+
+        <div
+          class="results-loading"
+          id="resultsLoading"
+        >
+
+          <div class="loading-spinner"></div>
+
+          <h3>
+            Finding matching jobs...
+          </h3>
+
+          <p>
+            Searching across your selected job sources.
+          </p>
+
+        </div>
+
+
+        <!-- ===================================
+             RESULTS CONTENT
+        ==================================== -->
+
+        <div
+          class="results-content"
+          id="resultsContent"
+        >
+
+
+          <!-- =================================
+               RESULT COUNT
+          ================================== -->
+
+          <div class="results-top">
+
+            <div class="results-count">
+
+              <div class="count-icon">
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M8 6h13"></path>
+                  <path d="M8 12h13"></path>
+                  <path d="M8 18h13"></path>
+                  <path d="M3 6h.01"></path>
+                  <path d="M3 12h.01"></path>
+                  <path d="M3 18h.01"></path>
+                </svg>
+
+              </div>
+
+              <div>
+
+                <strong id="resultCount">
+                  0 jobs found
+                </strong>
+
+                <span>
+                  Matching your search criteria
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="results-summary"
+              id="resultsSummary"
+            >
+              Matching opportunities from your selected sources.
+            </div>
+
+          </div>
+
+
+          <!-- =================================
+               SEARCH SUMMARY
+          ================================== -->
+
+          <div class="search-summary">
+
+            <div class="summary-label">
+              Your search
+            </div>
+
+            <div
+              class="summary-title"
+              id="summaryTitle"
+            >
+              Frontend Developer
+            </div>
+
+
+            <div
+              class="filter-tags"
+              id="filterTags"
+            ></div>
+
+          </div>
+
+
+          <!-- =================================
+               PAYMENT / QUANTITY
+          ================================== -->
+
+          <div class="purchase-section">
+
+            <div class="purchase-header">
+
+              <h3>
+                Choose how many jobs to apply to
+              </h3>
+
+              <p>
+                You can apply to up to
+                <strong id="maximumJobsText">0</strong>
+                matching jobs.
+              </p>
+
+            </div>
+
+
+            <div class="purchase-layout">
+
+              <div>
+
+                <div class="quantity-control">
+
+                  <button
+                    type="button"
+                    class="quantity-button"
+                    id="decreaseJobsButton"
+                    aria-label="Decrease number of jobs"
+                  >
+                    −
+                  </button>
+
+
+                  <div
+                    class="quantity-display"
+                    id="quantityDisplay"
+                  >
+                    1,000 jobs
+
+                    <span>
+                      selected
+                    </span>
+                  </div>
+
+
+                  <button
+                    type="button"
+                    class="quantity-button"
+                    id="increaseJobsButton"
+                    aria-label="Increase number of jobs"
+                  >
+                    +
+                  </button>
+
+                </div>
+
+
+                <div class="purchase-note">
+                  ₦5,000 covers up to 1,000 jobs. Additional
+                  1,000-job batches cost another ₦5,000.
+                </div>
+
+              </div>
+
+
+              <div class="purchase-price">
+
+                <div class="purchase-price-label">
+                  Amount to pay
+                </div>
+
+                <div
+                  class="purchase-price-value"
+                  id="purchasePrice"
+                >
+                  ₦5,000
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================
+               PAYMENT STATUS
+          ================================== -->
+
+          <div
+            class="payment-status"
+            id="paymentStatus"
+          >
+            Opening secure checkout...
+          </div>
+
+
+          <!-- =================================
+               APPLY
+          ================================== -->
+
+          <div class="results-footer">
+
+            <div class="apply-message">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z"></path>
+                <path d="M12 16v-4"></path>
+                <path d="M12 8h.01"></path>
+              </svg>
+
+              <div>
+
+                <strong>
+                  Ready to apply?
+                </strong>
+
+                <span>
+                  Pay securely first. Your selected jobs will then be
+                  applied for using your uploaded resume.
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <button
+              type="button"
+              class="apply-all-btn"
+              id="applyAllButton"
+            >
+
+              <span id="applyButtonText">
+                Pay ₦5,000 & Apply
+              </span>
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M22 2 11 13"></path>
+                <path d="m22 2-7 20-4-9-9-4Z"></path>
+              </svg>
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================================
+       SUCCESS MODAL
+  ========================================== -->
+
+  <div
+    class="modal-overlay"
+    id="successModal"
+  >
+
+    <div class="modal">
+
+      <div class="modal-icon">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M20 6 9 17l-5-5"></path>
+        </svg>
+
+      </div>
+
+
+      <h2>
+        Payment Successful
+      </h2>
+
+
+      <p id="modalMessage">
+        Your payment was successful.
+      </p>
+
+
+      <button
+        type="button"
+        class="modal-close"
+        id="modalClose"
+      >
+        Done
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================
+       FOOTER
+  ========================================== -->
+
+  <footer>
+
+    <div class="footer-inner">
+
+      <span>
+        © 2026 Applikart. All rights reserved.
+      </span>
+
+      <span>
+        Search once. Apply to more.
+      </span>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =========================================
+       JAVASCRIPT
+  ========================================== -->
+
+  <script>
+
+
+    /* =========================================================
+       PAYMENT CONFIGURATION
+    =========================================================
+
+       TEST MODE IS ACTIVE BY DEFAULT.
+
+       When your backend is ready and you want to go live,
+       change:
+
+           PAYMENT_MODE = "test"
+
+       to:
+
+           PAYMENT_MODE = "live"
+
+       IMPORTANT:
+       Only PUBLIC keys belong in this frontend.
+
+       Never put your Flutterwave SECRET KEY in this file.
+    ========================================================= */
+
+    const PAYMENT_MODE = "live";
+
+
+    const FLUTTERWAVE_PUBLIC_KEY = {
+
+      test:
+        "FLWPUBK_TEST-c3adb57392cdc89f81cd6b12959f7141-X",
+
+      live:
+        "FLWPUBK-766caaef810d70163be3a8d8e5bb2c87-X"
+
+    }[PAYMENT_MODE];
+
+
+    /* =========================================================
+       PRICING
+    ========================================================= */
+
+    const JOBS_PER_BATCH = 1000;
+
+    const PRICE_PER_BATCH = 20;
+
+
+    /* =========================================================
+       JOB TITLE DATA
+    ========================================================= */
+
+    const jobs = [
+      // Technology & Software
+      { title: "Software Engineer", count: 118420 },
+      { title: "Software Developer", count: 105740 },
+      { title: "Senior Software Engineer", count: 92480 },
+      { title: "Junior Software Engineer", count: 73620 },
+      { title: "Frontend Developer", count: 84260 },
+      { title: "Frontend Engineer", count: 76840 },
+      { title: "Backend Developer", count: 79430 },
+      { title: "Backend Engineer", count: 73180 },
+      { title: "Full Stack Developer", count: 82490 },
+      { title: "Full Stack Engineer", count: 71640 },
+      { title: "Web Developer", count: 91850 },
+      { title: "Web Designer", count: 78420 },
+      { title: "React Developer", count: 73420 },
+      { title: "React Engineer", count: 68240 },
+      { title: "Angular Developer", count: 67180 },
+      { title: "Vue.js Developer", count: 63840 },
+      { title: "JavaScript Developer", count: 68320 },
+      { title: "TypeScript Developer", count: 64260 },
+      { title: "Python Developer", count: 72180 },
+      { title: "Java Developer", count: 81240 },
+      { title: "C++ Developer", count: 68420 },
+      { title: "C# Developer", count: 67280 },
+      { title: "PHP Developer", count: 69420 },
+      { title: "Ruby Developer", count: 61480 },
+      { title: "Go Developer", count: 62340 },
+      { title: "Mobile App Developer", count: 65740 },
+      { title: "iOS Developer", count: 63820 },
+      { title: "Android Developer", count: 68260 },
+      { title: "Flutter Developer", count: 61740 },
+      { title: "React Native Developer", count: 62840 },
+      { title: "DevOps Engineer", count: 74860 },
+      { title: "Cloud Engineer", count: 69240 },
+      { title: "Cloud Architect", count: 61480 },
+      { title: "Solutions Architect", count: 67320 },
+      { title: "Software Architect", count: 64820 },
+      { title: "Site Reliability Engineer", count: 62140 },
+      { title: "Systems Engineer", count: 71980 },
+      { title: "Systems Administrator", count: 68420 },
+      { title: "Network Engineer", count: 76240 },
+      { title: "Network Administrator", count: 63820 },
+      { title: "Database Administrator", count: 67240 },
+      { title: "Database Developer", count: 61480 },
+      { title: "IT Support Specialist", count: 93420 },
+      { title: "IT Support Technician", count: 78260 },
+      { title: "Technical Support Specialist", count: 81420 },
+      { title: "IT Manager", count: 74680 },
+      { title: "IT Project Manager", count: 68240 },
+      { title: "Information Security Analyst", count: 71360 },
+      { title: "Cybersecurity Analyst", count: 69820 },
+      { title: "Cybersecurity Engineer", count: 64180 },
+      { title: "Security Engineer", count: 62740 },
+      { title: "Penetration Tester", count: 60480 },
+      { title: "QA Engineer", count: 67420 },
+      { title: "QA Tester", count: 76280 },
+      { title: "Software Test Engineer", count: 65140 },
+      { title: "Automation Engineer", count: 61820 },
+      { title: "Machine Learning Engineer", count: 68460 },
+      { title: "AI Engineer", count: 72140 },
+      { title: "Data Engineer", count: 74620 },
+      { title: "Data Scientist", count: 79840 },
+      { title: "Data Analyst", count: 81560 },
+      { title: "Business Intelligence Analyst", count: 67480 },
+      { title: "BI Developer", count: 61240 },
+      { title: "Research Scientist", count: 60780 },
+
+      // Product & Project Management
+      { title: "Product Manager", count: 86240 },
+      { title: "Senior Product Manager", count: 68420 },
+      { title: "Associate Product Manager", count: 64180 },
+      { title: "Product Owner", count: 72460 },
+      { title: "Product Designer", count: 73260 },
+      { title: "Project Manager", count: 104280 },
+      { title: "Senior Project Manager", count: 74820 },
+      { title: "Junior Project Manager", count: 63240 },
+      { title: "Program Manager", count: 71480 },
+      { title: "Program Coordinator", count: 64120 },
+      { title: "Scrum Master", count: 68460 },
+      { title: "Agile Coach", count: 61420 },
+      { title: "Project Coordinator", count: 67240 },
+      { title: "Operations Project Manager", count: 62840 },
+      { title: "Technical Project Manager", count: 65180 },
+      { title: "Product Operations Manager", count: 60740 },
+
+      // Design & Creative
+      { title: "Graphic Designer", count: 82340 },
+      { title: "Senior Graphic Designer", count: 67480 },
+      { title: "UI Designer", count: 64120 },
+      { title: "UX Designer", count: 67890 },
+      { title: "UI/UX Designer", count: 72840 },
+      { title: "UX Researcher", count: 61480 },
+      { title: "Visual Designer", count: 63240 },
+      { title: "Interaction Designer", count: 60720 },
+      { title: "Brand Designer", count: 61840 },
+      { title: "Product Designer", count: 73260 },
+      { title: "Web Designer", count: 78420 },
+      { title: "Motion Designer", count: 62480 },
+      { title: "Motion Graphics Designer", count: 61340 },
+      { title: "Art Director", count: 64180 },
+      { title: "Creative Director", count: 68740 },
+      { title: "Creative Designer", count: 69420 },
+      { title: "Illustrator", count: 61260 },
+      { title: "Animator", count: 60480 },
+      { title: "Video Editor", count: 78320 },
+      { title: "Video Producer", count: 62480 },
+      { title: "Photographer", count: 71840 },
+      { title: "3D Artist", count: 60420 },
+      { title: "3D Designer", count: 61180 },
+
+      // Marketing
+      { title: "Marketing Specialist", count: 84620 },
+      { title: "Marketing Manager", count: 92480 },
+      { title: "Marketing Coordinator", count: 71840 },
+      { title: "Digital Marketing Specialist", count: 72840 },
+      { title: "Digital Marketing Manager", count: 64280 },
+      { title: "Digital Marketing Coordinator", count: 61420 },
+      { title: "SEO Specialist", count: 69480 },
+      { title: "SEO Manager", count: 61840 },
+      { title: "SEM Specialist", count: 60480 },
+      { title: "Content Marketing Specialist", count: 67240 },
+      { title: "Content Marketing Manager", count: 62840 },
+      { title: "Social Media Manager", count: 68940 },
+      { title: "Social Media Specialist", count: 72480 },
+      { title: "Social Media Coordinator", count: 61420 },
+      { title: "Email Marketing Specialist", count: 64280 },
+      { title: "Growth Marketing Manager", count: 61840 },
+      { title: "Growth Marketing Specialist", count: 60420 },
+      { title: "Brand Manager", count: 67820 },
+      { title: "Brand Strategist", count: 61340 },
+      { title: "Marketing Analyst", count: 64180 },
+      { title: "Market Research Analyst", count: 74620 },
+      { title: "Public Relations Specialist", count: 68420 },
+      { title: "Public Relations Manager", count: 63240 },
+      { title: "Communications Specialist", count: 72180 },
+      { title: "Communications Manager", count: 61480 },
+
+      // Writing & Content
+      { title: "Content Writer", count: 75260 },
+      { title: "Technical Writer", count: 61380 },
+      { title: "Copywriter", count: 68420 },
+      { title: "Senior Copywriter", count: 62140 },
+      { title: "SEO Content Writer", count: 64780 },
+      { title: "Content Editor", count: 67240 },
+      { title: "Managing Editor", count: 61480 },
+      { title: "Editor", count: 71840 },
+      { title: "Proofreader", count: 62820 },
+      { title: "Blogger", count: 60480 },
+      { title: "Content Strategist", count: 64180 },
+      { title: "Technical Content Writer", count: 60840 },
+      { title: "Grant Writer", count: 60420 },
+      { title: "Proposal Writer", count: 61780 },
+
+      // Sales
+      { title: "Sales Representative", count: 121640 },
+      { title: "Sales Associate", count: 98740 },
+      { title: "Sales Executive", count: 91820 },
+      { title: "Sales Manager", count: 68970 },
+      { title: "Senior Sales Manager", count: 64280 },
+      { title: "Sales Coordinator", count: 72460 },
+      { title: "Sales Consultant", count: 81240 },
+      { title: "Business Development Representative", count: 78420 },
+      { title: "Business Development Manager", count: 74860 },
+      { title: "Business Development Executive", count: 68240 },
+      { title: "Account Executive", count: 86240 },
+      { title: "Account Manager", count: 79840 },
+      { title: "Key Account Manager", count: 64180 },
+      { title: "Inside Sales Representative", count: 73480 },
+      { title: "Outside Sales Representative", count: 67420 },
+      { title: "Sales Operations Analyst", count: 61340 },
+      { title: "Sales Operations Manager", count: 62480 },
+      { title: "Sales Development Representative", count: 69240 },
+      { title: "Telemarketer", count: 61780 },
+
+      // Customer Service
+      { title: "Customer Service Representative", count: 114820 },
+      { title: "Customer Support Specialist", count: 114820 },
+      { title: "Customer Support Agent", count: 97860 },
+      { title: "Customer Service Agent", count: 102480 },
+      { title: "Customer Success Manager", count: 76240 },
+      { title: "Customer Success Specialist", count: 69480 },
+      { title: "Customer Experience Specialist", count: 67240 },
+      { title: "Customer Experience Manager", count: 61480 },
+      { title: "Call Center Representative", count: 93620 },
+      { title: "Call Center Agent", count: 88420 },
+      { title: "Contact Center Representative", count: 73480 },
+      { title: "Technical Support Representative", count: 69240 },
+      { title: "Client Services Representative", count: 71840 },
+      { title: "Client Success Manager", count: 64180 },
+
+      // Administrative & Virtual Work
+      { title: "Virtual Assistant", count: 86420 },
+      { title: "Executive Assistant", count: 79240 },
+      { title: "Administrative Assistant", count: 80350 },
+      { title: "Administrative Coordinator", count: 72480 },
+      { title: "Office Assistant", count: 74820 },
+      { title: "Office Manager", count: 68420 },
+      { title: "Receptionist", count: 91840 },
+      { title: "Data Entry Specialist", count: 93420 },
+      { title: "Data Entry Clerk", count: 78260 },
+      { title: "Data Entry Operator", count: 74620 },
+      { title: "Administrative Specialist", count: 67840 },
+      { title: "Operations Assistant", count: 71480 },
+      { title: "Personal Assistant", count: 68240 },
+      { title: "Scheduling Coordinator", count: 62480 },
+      { title: "Records Specialist", count: 60840 },
+      { title: "Document Specialist", count: 61420 },
+
+      // Finance & Accounting
+      { title: "Accountant", count: 96740 },
+      { title: "Senior Accountant", count: 72480 },
+      { title: "Junior Accountant", count: 68420 },
+      { title: "Accounting Assistant", count: 74860 },
+      { title: "Accounting Clerk", count: 72140 },
+      { title: "Accounts Payable Specialist", count: 67480 },
+      { title: "Accounts Receivable Specialist", count: 68240 },
+      { title: "Financial Analyst", count: 81240 },
+      { title: "Senior Financial Analyst", count: 64180 },
+      { title: "Finance Manager", count: 69420 },
+      { title: "Finance Specialist", count: 62840 },
+      { title: "Payroll Specialist", count: 67240 },
+      { title: "Payroll Manager", count: 61480 },
+      { title: "Bookkeeper", count: 83420 },
+      { title: "Billing Specialist", count: 64820 },
+      { title: "Billing Coordinator", count: 61240 },
+      { title: "Credit Analyst", count: 62840 },
+      { title: "Financial Controller", count: 60780 },
+      { title: "Treasury Analyst", count: 60420 },
+      { title: "Tax Accountant", count: 61840 },
+      { title: "Auditor", count: 68240 },
+      { title: "Internal Auditor", count: 62480 },
+
+      // Human Resources & Recruiting
+      { title: "Human Resources Specialist", count: 70480 },
+      { title: "Human Resources Manager", count: 74620 },
+      { title: "HR Coordinator", count: 68240 },
+      { title: "HR Generalist", count: 71840 },
+      { title: "HR Assistant", count: 67480 },
+      { title: "HR Business Partner", count: 63240 },
+      { title: "Recruiter", count: 78360 },
+      { title: "Technical Recruiter", count: 67420 },
+      { title: "Recruiting Coordinator", count: 64820 },
+      { title: "Talent Acquisition Specialist", count: 72840 },
+      { title: "Talent Acquisition Manager", count: 61480 },
+      { title: "Talent Manager", count: 60840 },
+      { title: "Training Coordinator", count: 61780 },
+      { title: "Learning and Development Specialist", count: 60420 },
+      { title: "Compensation Analyst", count: 60280 },
+
+      // Operations & Management
+      { title: "Operations Manager", count: 66740 },
+      { title: "Operations Coordinator", count: 72480 },
+      { title: "Operations Specialist", count: 69420 },
+      { title: "Operations Analyst", count: 68140 },
+      { title: "Business Operations Manager", count: 64820 },
+      { title: "Business Analyst", count: 74680 },
+      { title: "Business Operations Analyst", count: 62480 },
+      { title: "General Manager", count: 67420 },
+      { title: "Regional Manager", count: 61840 },
+      { title: "Branch Manager", count: 68240 },
+      { title: "Store Manager", count: 84620 },
+      { title: "Assistant Manager", count: 79240 },
+      { title: "Operations Director", count: 60780 },
+      { title: "Process Improvement Specialist", count: 61240 },
+      { title: "Process Analyst", count: 62180 },
+
+      // Supply Chain & Logistics
+      { title: "Supply Chain Analyst", count: 64820 },
+      { title: "Supply Chain Manager", count: 68240 },
+      { title: "Supply Chain Specialist", count: 62480 },
+      { title: "Logistics Coordinator", count: 74820 },
+      { title: "Logistics Manager", count: 67240 },
+      { title: "Logistics Specialist", count: 64180 },
+      { title: "Procurement Specialist", count: 68420 },
+      { title: "Procurement Manager", count: 62140 },
+      { title: "Purchasing Specialist", count: 73480 },
+      { title: "Purchasing Manager", count: 61480 },
+      { title: "Inventory Specialist", count: 62840 },
+      { title: "Inventory Manager", count: 60780 },
+      { title: "Warehouse Associate", count: 82460 },
+      { title: "Warehouse Manager", count: 67420 },
+      { title: "Warehouse Supervisor", count: 71840 },
+      { title: "Distribution Manager", count: 60480 },
+      { title: "Supply Chain Coordinator", count: 61240 },
+
+      // Healthcare
+      { title: "Registered Nurse", count: 118640 },
+      { title: "Nurse Practitioner", count: 82420 },
+      { title: "Licensed Practical Nurse", count: 74680 },
+      { title: "Clinical Nurse", count: 68420 },
+      { title: "Medical Assistant", count: 91840 },
+      { title: "Medical Receptionist", count: 72480 },
+      { title: "Medical Billing Specialist", count: 68240 },
+      { title: "Medical Coder", count: 71480 },
+      { title: "Healthcare Administrator", count: 64820 },
+      { title: "Healthcare Coordinator", count: 62740 },
+      { title: "Pharmacy Technician", count: 78240 },
+      { title: "Dental Assistant", count: 69480 },
+      { title: "Dental Hygienist", count: 62480 },
+      { title: "Radiologic Technologist", count: 61420 },
+      { title: "Physical Therapist", count: 67840 },
+      { title: "Occupational Therapist", count: 61280 },
+      { title: "Care Coordinator", count: 64820 },
+      { title: "Patient Care Coordinator", count: 63480 },
+
+      // Education
+      { title: "Teacher", count: 112480 },
+      { title: "Elementary School Teacher", count: 82460 },
+      { title: "High School Teacher", count: 78640 },
+      { title: "English Teacher", count: 91820 },
+      { title: "Math Teacher", count: 72480 },
+      { title: "Science Teacher", count: 68420 },
+      { title: "Special Education Teacher", count: 64180 },
+      { title: "Teaching Assistant", count: 76240 },
+      { title: "Teacher Assistant", count: 71840 },
+      { title: "Tutor", count: 94620 },
+      { title: "Online Tutor", count: 72480 },
+      { title: "Academic Advisor", count: 61420 },
+      { title: "Instructional Designer", count: 64280 },
+      { title: "Curriculum Developer", count: 60480 },
+      { title: "Education Coordinator", count: 61240 },
+
+      // Engineering
+      { title: "Mechanical Engineer", count: 82460 },
+      { title: "Electrical Engineer", count: 79820 },
+      { title: "Civil Engineer", count: 84640 },
+      { title: "Chemical Engineer", count: 64280 },
+      { title: "Industrial Engineer", count: 67420 },
+      { title: "Manufacturing Engineer", count: 64820 },
+      { title: "Quality Engineer", count: 68240 },
+      { title: "Process Engineer", count: 69420 },
+      { title: "Project Engineer", count: 72840 },
+      { title: "Design Engineer", count: 67480 },
+      { title: "Environmental Engineer", count: 61420 },
+      { title: "Biomedical Engineer", count: 60840 },
+      { title: "Aerospace Engineer", count: 60480 },
+      { title: "Engineering Manager", count: 64820 },
+      { title: "Engineering Technician", count: 71840 },
+
+      // Legal
+      { title: "Attorney", count: 68420 },
+      { title: "Lawyer", count: 74680 },
+      { title: "Associate Attorney", count: 62480 },
+      { title: "Legal Assistant", count: 78240 },
+      { title: "Legal Secretary", count: 67420 },
+      { title: "Paralegal", count: 82460 },
+      { title: "Legal Analyst", count: 61480 },
+      { title: "Compliance Analyst", count: 64820 },
+      { title: "Compliance Specialist", count: 67240 },
+      { title: "Compliance Manager", count: 60480 },
+      { title: "Contract Specialist", count: 61840 },
+      { title: "Contract Manager", count: 60780 },
+
+      // Real Estate
+      { title: "Real Estate Agent", count: 92840 },
+      { title: "Real Estate Broker", count: 67420 },
+      { title: "Property Manager", count: 74820 },
+      { title: "Property Administrator", count: 62480 },
+      { title: "Leasing Consultant", count: 68240 },
+      { title: "Real Estate Analyst", count: 61420 },
+      { title: "Real Estate Manager", count: 60840 },
+
+      // Hospitality & Retail
+      { title: "Hotel Manager", count: 68420 },
+      { title: "Front Desk Agent", count: 82460 },
+      { title: "Hotel Receptionist", count: 74820 },
+      { title: "Guest Services Representative", count: 69240 },
+      { title: "Restaurant Manager", count: 71840 },
+      { title: "Restaurant Supervisor", count: 67420 },
+      { title: "Restaurant Server", count: 96840 },
+      { title: "Bartender", count: 82460 },
+      { title: "Chef", count: 78420 },
+      { title: "Sous Chef", count: 64820 },
+      { title: "Cook", count: 102480 },
+      { title: "Retail Sales Associate", count: 112640 },
+      { title: "Retail Manager", count: 78420 },
+      { title: "Retail Supervisor", count: 71840 },
+      { title: "Store Associate", count: 93420 },
+      { title: "Cashier", count: 108240 },
+      { title: "Merchandiser", count: 68420 },
+
+      // Media & Communications
+      { title: "Journalist", count: 67480 },
+      { title: "Reporter", count: 62840 },
+      { title: "News Editor", count: 61420 },
+      { title: "Producer", count: 64280 },
+      { title: "Broadcast Producer", count: 60840 },
+      { title: "Content Producer", count: 67420 },
+      { title: "Podcast Producer", count: 60480 },
+      { title: "Communications Specialist", count: 72180 },
+      { title: "Communications Manager", count: 61480 },
+      { title: "Media Planner", count: 60840 },
+      { title: "Media Buyer", count: 62140 },
+
+      // Insurance
+      { title: "Insurance Agent", count: 82460 },
+      { title: "Insurance Sales Agent", count: 74820 },
+      { title: "Insurance Underwriter", count: 68240 },
+      { title: "Claims Adjuster", count: 71840 },
+      { title: "Claims Specialist", count: 67420 },
+      { title: "Insurance Analyst", count: 61480 },
+      { title: "Insurance Coordinator", count: 60840 },
+
+      // Banking & Financial Services
+      { title: "Bank Teller", count: 84620 },
+      { title: "Personal Banker", count: 78420 },
+      { title: "Relationship Manager", count: 72480 },
+      { title: "Loan Officer", count: 74820 },
+      { title: "Credit Analyst", count: 62840 },
+      { title: "Mortgage Loan Officer", count: 61480 },
+      { title: "Risk Analyst", count: 67240 },
+      { title: "Risk Manager", count: 61840 },
+      { title: "Investment Analyst", count: 64280 },
+      { title: "Investment Manager", count: 60780 },
+      { title: "Wealth Manager", count: 60480 },
+      { title: "Financial Advisor", count: 82460 },
+
+      // Science & Research
+      { title: "Research Analyst", count: 71840 },
+      { title: "Research Associate", count: 68240 },
+      { title: "Research Assistant", count: 74820 },
+      { title: "Research Coordinator", count: 61480 },
+      { title: "Laboratory Technician", count: 72480 },
+      { title: "Lab Technician", count: 68420 },
+      { title: "Laboratory Manager", count: 60840 },
+      { title: "Clinical Research Associate", count: 62480 },
+      { title: "Clinical Research Coordinator", count: 61840 },
+
+      // Other Common Roles
+      { title: "Security Officer", count: 94620 },
+      { title: "Security Guard", count: 112840 },
+      { title: "Driver", count: 108420 },
+      { title: "Delivery Driver", count: 102680 },
+      { title: "Truck Driver", count: 98420 },
+      { title: "Courier", count: 84620 },
+      { title: "Maintenance Technician", count: 78420 },
+      { title: "Maintenance Manager", count: 62840 },
+      { title: "Electrician", count: 91840 },
+      { title: "Plumber", count: 84620 },
+      { title: "Construction Manager", count: 67240 },
+      { title: "Construction Worker", count: 98420 },
+      { title: "Site Supervisor", count: 72480 },
+      { title: "Field Technician", count: 68240 },
+      { title: "Field Service Technician", count: 64820 },
+      { title: "Customer Service Manager", count: 67480 },
+      { title: "General Laborer", count: 92640 },
+      { title: "Production Supervisor", count: 68420 },
+      { title: "Production Manager", count: 64820 },
+      { title: "Quality Assurance Specialist", count: 72480 },
+      { title: "Quality Control Specialist", count: 67420 }
+    ];
+
+    /* =========================================================
+       NIGERIAN LOCATION DATA
+    =========================================================
+
+       Add another location here and the dropdown will
+       automatically update.
+
+       factor:
+       Simulated location coverage/availability factor.
+       It is intentionally used as a gentle adjustment,
+       not as a direct percentage of jobs.
+    ========================================================= */
+
+    const locations = [
+
+      {
+        value: "all",
+        name: "Any location",
+        factor: 1.00
+      },
+
+      {
+        value: "abia",
+        name: "Abia",
+        factor: 0.72
+      },
+
+      {
+        value: "adamawa",
+        name: "Adamawa",
+        factor: 0.60
+      },
+
+      {
+        value: "akwa-ibom",
+        name: "Akwa Ibom",
+        factor: 0.76
+      },
+
+      {
+        value: "anambra",
+        name: "Anambra",
+        factor: 0.79
+      },
+
+      {
+        value: "bauchi",
+        name: "Bauchi",
+        factor: 0.63
+      },
+
+      {
+        value: "bayelsa",
+        name: "Bayelsa",
+        factor: 0.65
+      },
+
+      {
+        value: "benue",
+        name: "Benue",
+        factor: 0.66
+      },
+
+      {
+        value: "borno",
+        name: "Borno",
+        factor: 0.55
+      },
+
+      {
+        value: "cross-river",
+        name: "Cross River",
+        factor: 0.67
+      },
+
+      {
+        value: "delta",
+        name: "Delta",
+        factor: 0.78
+      },
+
+      {
+        value: "ebonyi",
+        name: "Ebonyi",
+        factor: 0.64
+      },
+
+      {
+        value: "edo",
+        name: "Edo",
+        factor: 0.75
+      },
+
+      {
+        value: "ekiti",
+        name: "Ekiti",
+        factor: 0.64
+      },
+
+      {
+        value: "enugu",
+        name: "Enugu",
+        factor: 0.79
+      },
+
+      {
+        value: "gombe",
+        name: "Gombe",
+        factor: 0.58
+      },
+
+      {
+        value: "imo",
+        name: "Imo",
+        factor: 0.76
+      },
+
+      {
+        value: "jigawa",
+        name: "Jigawa",
+        factor: 0.57
+      },
+
+      {
+        value: "kaduna",
+        name: "Kaduna",
+        factor: 0.82
+      },
+
+      {
+        value: "kano",
+        name: "Kano",
+        factor: 0.80
+      },
+
+      {
+        value: "katsina",
+        name: "Katsina",
+        factor: 0.59
+      },
+
+      {
+        value: "kebbi",
+        name: "Kebbi",
+        factor: 0.56
+      },
+
+      {
+        value: "kogi",
+        name: "Kogi",
+        factor: 0.65
+      },
+
+      {
+        value: "kwara",
+        name: "Kwara",
+        factor: 0.70
+      },
+
+      {
+        value: "lagos",
+        name: "Lagos",
+        factor: 0.96
+      },
+
+      {
+        value: "nasarawa",
+        name: "Nasarawa",
+        factor: 0.68
+      },
+
+      {
+        value: "niger",
+        name: "Niger",
+        factor: 0.61
+      },
+
+      {
+        value: "ogun",
+        name: "Ogun",
+        factor: 0.83
+      },
+
+      {
+        value: "ondo",
+        name: "Ondo",
+        factor: 0.70
+      },
+
+      {
+        value: "osun",
+        name: "Osun",
+        factor: 0.69
+      },
+
+      {
+        value: "oyo",
+        name: "Oyo",
+        factor: 0.82
+      },
+
+      {
+        value: "plateau",
+        name: "Plateau",
+        factor: 0.67
+      },
+
+      {
+        value: "rivers",
+        name: "Rivers",
+        factor: 0.88
+      },
+
+      {
+        value: "sokoto",
+        name: "Sokoto",
+        factor: 0.57
+      },
+
+      {
+        value: "taraba",
+        name: "Taraba",
+        factor: 0.56
+      },
+
+      {
+        value: "yobe",
+        name: "Yobe",
+        factor: 0.54
+      },
+
+      {
+        value: "zamfara",
+        name: "Zamfara",
+        factor: 0.55
+      },
+
+      {
+        value: "fct",
+        name: "Federal Capital Territory (FCT)",
+        factor: 0.92
+      }
+
+    ];
+
+
+    /* =========================================================
+       JOB TYPE DATA
+    ========================================================= */
+
+    const jobTypes = [
+
+      {
+        value: "all",
+        name: "Any job type",
+        factor: 1.00
+      },
+
+      {
+        value: "full-time",
+        name: "Full-time",
+        factor: 0.96
+      },
+
+      {
+        value: "part-time",
+        name: "Part-time",
+        factor: 0.91
+      },
+
+      {
+        value: "contract",
+        name: "Contract",
+        factor: 0.89
+      },
+
+      {
+        value: "internship",
+        name: "Internship",
+        factor: 0.86
+      }
+
+    ];
+
+
+    /* =========================================================
+       EXPERIENCE DATA
+    ========================================================= */
+
+    const experienceLevels = [
+
+      {
+        value: "all",
+        name: "Any experience",
+        factor: 1.00
+      },
+
+      {
+        value: "entry",
+        name: "Entry level",
+        factor: 0.94
+      },
+
+      {
+        value: "mid",
+        name: "Mid level",
+        factor: 0.91
+      },
+
+      {
+        value: "senior",
+        name: "Senior level",
+        factor: 0.88
+      }
+
+    ];
+
+
+    /* =========================================================
+       WORK ARRANGEMENT DATA
+    ========================================================= */
+
+    const arrangements = [
+
+      {
+        value: "all",
+        name: "Any arrangement",
+        factor: 1.00
+      },
+
+      {
+        value: "remote",
+        name: "Remote",
+        factor: 0.94
+      },
+
+      {
+        value: "hybrid",
+        name: "Hybrid",
+        factor: 0.90
+      },
+
+      {
+        value: "onsite",
+        name: "On-site",
+        factor: 0.87
+      }
+
+    ];
+
+
+    /* =========================================================
+       JOB SOURCE DATA
+    ========================================================= */
+
+    const sources = [
+
+      {
+        value: "linkedin",
+        name: "LinkedIn",
+        factor: 0.94
+      },
+
+      {
+        value: "indeed",
+        name: "Indeed",
+        factor: 0.92
+      },
+
+      {
+        value: "glassdoor",
+        name: "Glassdoor",
+        factor: 0.90
+      },
+
+      {
+        value: "ziprecruiter",
+        name: "ZipRecruiter",
+        factor: 0.88
+      },
+
+      {
+        value: "monster",
+        name: "Monster",
+        factor: 0.86
+      },
+
+      {
+        value: "simplyhired",
+        name: "SimplyHired",
+        factor: 0.84
+      }
+
+    ];
+
+
+    /* =========================================================
+       DOM ELEMENTS
+    ========================================================= */
+
+    const searchForm =
+      document.getElementById("jobSearchForm");
+
+    const resumeInput =
+      document.getElementById("resume");
+
+    const uploadBox =
+      document.getElementById("uploadBox");
+
+    const selectedFile =
+      document.getElementById("selectedFile");
+
+    const fileName =
+      document.getElementById("fileName");
+
+    const resultsSection =
+      document.getElementById("resultsSection");
+
+    const resultsLoading =
+      document.getElementById("resultsLoading");
+
+    const resultsContent =
+      document.getElementById("resultsContent");
+
+    const resultCount =
+      document.getElementById("resultCount");
+
+    const resultsSummary =
+      document.getElementById("resultsSummary");
+
+    const applyAllButton =
+      document.getElementById("applyAllButton");
+
+    const applyButtonText =
+      document.getElementById("applyButtonText");
+
+    const successModal =
+      document.getElementById("successModal");
+
+    const modalClose =
+      document.getElementById("modalClose");
+
+    const modalMessage =
+      document.getElementById("modalMessage");
+
+    const searchButton =
+      document.getElementById("searchButton");
+
+    const searchButtonText =
+      document.getElementById("searchButtonText");
+
+    const locationSelect =
+      document.getElementById("location");
+
+    const jobTypeSelect =
+      document.getElementById("jobType");
+
+    const experienceSelect =
+      document.getElementById("experience");
+
+    const arrangementSelect =
+      document.getElementById("arrangement");
+
+    const maximumJobsText =
+      document.getElementById("maximumJobsText");
+
+    const quantityDisplay =
+      document.getElementById("quantityDisplay");
+
+    const purchasePrice =
+      document.getElementById("purchasePrice");
+
+    const decreaseJobsButton =
+      document.getElementById("decreaseJobsButton");
+
+    const increaseJobsButton =
+      document.getElementById("increaseJobsButton");
+
+    const paymentStatus =
+      document.getElementById("paymentStatus");
+
+
+    /* =========================================================
+       JOB DROPDOWN ELEMENTS
+    ========================================================= */
+
+    const jobDropdown =
+      document.getElementById("jobDropdown");
+
+    const jobDropdownButton =
+      document.getElementById("jobDropdownButton");
+
+    const jobSearchInput =
+      document.getElementById("jobSearchInput");
+
+    const jobOptions =
+      document.getElementById("jobOptions");
+
+    const selectedJobText =
+      document.getElementById("selectedJobText");
+
+    const selectedJobHint =
+      document.getElementById("selectedJobHint");
+
+
+    /* =========================================================
+       SOURCE DROPDOWN ELEMENTS
+    ========================================================= */
+
+    const sourceDropdown =
+      document.getElementById("sourceDropdown");
+
+    const sourceDropdownButton =
+      document.getElementById("sourceDropdownButton");
+
+    const sourceOptions =
+      document.getElementById("sourceOptions");
+
+    const sourceButtonText =
+      document.getElementById("sourceButtonText");
+
+    const sourceSelectionInfo =
+      document.getElementById("sourceSelectionInfo");
+
+
+    /* =========================================================
+       RESULT ELEMENTS
+    ========================================================= */
+
+    const summaryTitle =
+      document.getElementById("summaryTitle");
+
+    const filterTags =
+      document.getElementById("filterTags");
+
+
+    /* =========================================================
+       CURRENT STATE
+    ========================================================= */
+
+    let selectedJob = null;
+
+    let selectedSourceValues =
+      sources.map(
+        source => source.value
+      );
+
+    let currentResultCount = 0;
+
+    let selectedJobQuantity = 0;
+
+    let isSearching = false;
+
+    let paymentInProgress = false;
+
+
+    /* =========================================================
+       FORMAT NUMBER
+    ========================================================= */
+
+    function formatNumber(number) {
+
+      return Number(number).toLocaleString("en-US");
+
+    }
+
+
+    /* =========================================================
+       FORMAT CURRENCY
+    ========================================================= */
+
+    function formatCurrency(amount) {
+
+      return `₦${formatNumber(amount)}`;
+
+    }
+
+
+    /* =========================================================
+       CALCULATE PRICE
+    ========================================================= */
+
+    function calculatePrice(jobQuantity) {
+
+      if (jobQuantity <= 0) {
+        return 0;
+      }
+
+      return (
+        Math.ceil(
+          jobQuantity /
+          JOBS_PER_BATCH
+        ) *
+        PRICE_PER_BATCH
+      );
+
+    }
+
+
+    /* =========================================================
+       GET MAXIMUM PURCHASE QUANTITY
+    ========================================================= */
+
+    function getMaximumPurchaseQuantity(
+      foundJobs
+    ) {
+
+      return Math.max(
+        0,
+        foundJobs
+      );
+
+    }
+
+
+    /* =========================================================
+       GET INITIAL PURCHASE QUANTITY
+    ========================================================= */
+
+    function getInitialPurchaseQuantity(
+      foundJobs
+    ) {
+
+      if (foundJobs <= 0) {
+        return 0;
+      }
+
+      return Math.min(
+        foundJobs,
+        JOBS_PER_BATCH
+      );
+
+    }
+
+
+    /* =========================================================
+       FIND DATA OBJECT
+    ========================================================= */
+
+    function findByValue(
+      array,
+      value
+    ) {
+
+      return array.find(
+        item =>
+          item.value === value
+      );
+
+    }
+
+
+    /* =========================================================
+       FORMAT LABELS
+    ========================================================= */
+
+    function formatLocation(
+      value
+    ) {
+
+      const item =
+        findByValue(
+          locations,
+          value
+        );
+
+      return item
+        ? item.name
+        : value;
+
+    }
+
+
+    function formatJobType(
+      value
+    ) {
+
+      const item =
+        findByValue(
+          jobTypes,
+          value
+        );
+
+      return item
+        ? item.name
+        : value;
+
+    }
+
+
+    function formatExperience(
+      value
+    ) {
+
+      const item =
+        findByValue(
+          experienceLevels,
+          value
+        );
+
+      return item
+        ? item.name
+        : value;
+
+    }
+
+
+    function formatArrangement(
+      value
+    ) {
+
+      const item =
+        findByValue(
+          arrangements,
+          value
+        );
+
+      return item
+        ? item.name
+        : value;
+
+    }
+
+
+    /* =========================================================
+       RENDER STANDARD SELECT OPTIONS
+    ========================================================= */
+
+    function renderSelectOptions(
+      selectElement,
+      items
+    ) {
+
+      selectElement.innerHTML = "";
+
+      items.forEach(
+        function(item) {
+
+          const option =
+            document.createElement(
+              "option"
+            );
+
+          option.value =
+            item.value;
+
+          option.textContent =
+            item.name;
+
+          selectElement.appendChild(
+            option
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       RENDER ALL FILTER SELECTS
+    ========================================================= */
+
+    function renderFilterSelects() {
+
+      renderSelectOptions(
+        locationSelect,
+        locations
+      );
+
+      renderSelectOptions(
+        jobTypeSelect,
+        jobTypes
+      );
+
+      renderSelectOptions(
+        experienceSelect,
+        experienceLevels
+      );
+
+      renderSelectOptions(
+        arrangementSelect,
+        arrangements
+      );
+
+    }
+
+
+    /* =========================================================
+       GET SOURCE BY VALUE
+    ========================================================= */
+
+    function getSource(
+      value
+    ) {
+
+      return sources.find(
+        source =>
+          source.value === value
+      );
+
+    }
+
+
+    /* =========================================================
+       SOURCE DISPLAY
+    ========================================================= */
+
+    function updateSourceDisplay() {
+
+      const allSelected =
+        selectedSourceValues.length ===
+        sources.length;
+
+
+      if (
+        allSelected ||
+        selectedSourceValues.length === 0
+      ) {
+
+        sourceButtonText.textContent =
+          "All job sources";
+
+        sourceButtonText.style.color =
+          "#667085";
+
+        sourceSelectionInfo.textContent =
+          "All sources selected";
+
+        return;
+
+      }
+
+
+      const selectedNames =
+        selectedSourceValues.map(
+          value => {
+
+            const source =
+              getSource(value);
+
+            return source
+              ? source.name
+              : value;
+
+          }
+        );
+
+
+      if (
+        selectedNames.length === 1
+      ) {
+
+        sourceButtonText.textContent =
+          selectedNames[0];
+
+      } else {
+
+        sourceButtonText.textContent =
+          `${selectedNames.length} sources selected`;
+
+      }
+
+
+      sourceButtonText.style.color =
+        "#101828";
+
+
+      sourceSelectionInfo.textContent =
+        `${selectedNames.length} of ${sources.length} sources selected`;
+
+    }
+
+
+    /* =========================================================
+       RENDER SOURCE OPTIONS
+    ========================================================= */
+
+    function renderSourceOptions() {
+
+      sourceOptions.innerHTML = "";
+
+
+      const allLabel =
+        document.createElement(
+          "label"
+        );
+
+      allLabel.className =
+        "source-option";
+
+
+      const allCheckbox =
+        document.createElement(
+          "input"
+        );
+
+      allCheckbox.type =
+        "checkbox";
+
+      allCheckbox.checked =
+        selectedSourceValues.length ===
+        sources.length;
+
+
+      const allText =
+        document.createElement(
+          "span"
+        );
+
+      allText.className =
+        "source-option-label";
+
+      allText.textContent =
+        "All job sources";
+
+
+      allLabel.appendChild(
+        allCheckbox
+      );
+
+      allLabel.appendChild(
+        allText
+      );
+
+      sourceOptions.appendChild(
+        allLabel
+      );
+
+
+      allCheckbox.addEventListener(
+        "change",
+        function () {
+
+          if (this.checked) {
+
+            selectedSourceValues =
+              sources.map(
+                source =>
+                  source.value
+              );
+
+          } else {
+
+            selectedSourceValues =
+              [];
+
+          }
+
+
+          renderSourceOptions();
+
+          updateSourceDisplay();
+
+        }
+      );
+
+
+      const divider =
+        document.createElement(
+          "div"
+        );
+
+      divider.className =
+        "source-divider";
+
+      sourceOptions.appendChild(
+        divider
+      );
+
+
+      sources.forEach(
+        function(source) {
+
+          const label =
+            document.createElement(
+              "label"
+            );
+
+          label.className =
+            "source-option";
+
+
+          const checkbox =
+            document.createElement(
+              "input"
+            );
+
+          checkbox.type =
+            "checkbox";
+
+          checkbox.value =
+            source.value;
+
+          checkbox.checked =
+            selectedSourceValues.includes(
+              source.value
+            );
+
+
+          const text =
+            document.createElement(
+              "span"
+            );
+
+          text.className =
+            "source-option-label";
+
+          text.textContent =
+            source.name;
+
+
+          label.appendChild(
+            checkbox
+          );
+
+          label.appendChild(
+            text
+          );
+
+          sourceOptions.appendChild(
+            label
+          );
+
+
+          checkbox.addEventListener(
+            "change",
+            function() {
+
+              if (this.checked) {
+
+                if (
+                  !selectedSourceValues.includes(
+                    source.value
+                  )
+                ) {
+
+                  selectedSourceValues.push(
+                    source.value
+                  );
+
+                }
+
+              } else {
+
+                selectedSourceValues =
+                  selectedSourceValues.filter(
+                    value =>
+                      value !==
+                      source.value
+                  );
+
+              }
+
+
+              renderSourceOptions();
+
+              updateSourceDisplay();
+
+            }
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       SOURCE DROPDOWN
+    ========================================================= */
+
+    sourceDropdownButton.addEventListener(
+      "click",
+      function() {
+
+        sourceDropdown.classList.toggle(
+          "open"
+        );
+
+      }
+    );
+
+
+    /* =========================================================
+       JOB OPTIONS
+    ========================================================= */
+
+    function renderJobOptions(
+      searchTerm = ""
+    ) {
+
+      const term =
+        searchTerm
+          .trim()
+          .toLowerCase();
+
+
+      const filteredJobs =
+        jobs.filter(
+          function(job) {
+
+            return job.title
+              .toLowerCase()
+              .includes(term);
+
+          }
+        );
+
+
+      jobOptions.innerHTML = "";
+
+
+      if (
+        !filteredJobs.length
+      ) {
+
+        jobOptions.innerHTML = `
+
+          <div class="no-job-options">
+
+            No matching job titles found.
+
+            <br>
+
+            Try another search.
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      filteredJobs.forEach(
+        function(job) {
+
+          const option =
+            document.createElement(
+              "button"
+            );
+
+          option.type =
+            "button";
+
+          option.className =
+            "job-option";
+
+
+          const name =
+            document.createElement(
+              "span"
+            );
+
+          name.className =
+            "job-option-name";
+
+          name.textContent =
+            job.title;
+
+
+          option.appendChild(
+            name
+          );
+
+
+          option.addEventListener(
+            "click",
+            function() {
+
+              selectJob(job);
+
+            }
+          );
+
+
+          jobOptions.appendChild(
+            option
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       SELECT JOB
+    ========================================================= */
+
+    function selectJob(
+      job
+    ) {
+
+      selectedJob =
+        job;
+
+
+      selectedJobText.textContent =
+        job.title;
+
+
+      selectedJobText.style.color =
+        "#101828";
+
+
+      jobDropdownButton.classList.add(
+        "selected"
+      );
+
+
+      selectedJobHint.classList.add(
+        "show"
+      );
+
+
+      selectedJobHint.textContent =
+        "Job title selected";
+
+
+      jobDropdown.classList.remove(
+        "open"
+      );
+
+
+      jobSearchInput.value = "";
+
+
+      renderJobOptions();
+
+    }
+
+
+    /* =========================================================
+       JOB DROPDOWN
+    ========================================================= */
+
+    jobDropdownButton.addEventListener(
+      "click",
+      function() {
+
+        const isOpen =
+          jobDropdown.classList.contains(
+            "open"
+          );
+
+
+        if (isOpen) {
+
+          jobDropdown.classList.remove(
+            "open"
+          );
+
+        } else {
+
+          jobDropdown.classList.add(
+            "open"
+          );
+
+          jobSearchInput.focus();
+
+          renderJobOptions();
+
+        }
+
+      }
+    );
+
+
+    jobSearchInput.addEventListener(
+      "input",
+      function() {
+
+        renderJobOptions(
+          this.value
+        );
+
+      }
+    );
+
+
+    /* =========================================================
+       CLOSE DROPDOWNS OUTSIDE
+    ========================================================= */
+
+    document.addEventListener(
+      "click",
+      function(event) {
+
+        if (
+          !jobDropdown.contains(
+            event.target
+          )
+        ) {
+
+          jobDropdown.classList.remove(
+            "open"
+          );
+
+        }
+
+
+        if (
+          !sourceDropdown.contains(
+            event.target
+          )
+        ) {
+
+          sourceDropdown.classList.remove(
+            "open"
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =========================================================
+       INITIAL RENDER
+    ========================================================= */
+
+    renderFilterSelects();
+
+    renderJobOptions();
+
+    renderSourceOptions();
+
+    updateSourceDisplay();
+
+
+    /* =========================================================
+       RESUME UPLOAD
+    ========================================================= */
+
+    resumeInput.addEventListener(
+      "change",
+      function() {
+
+        const file =
+          this.files[0];
+
+
+        if (!file) {
+          return;
+        }
+
+
+        const maxSize =
+          5 * 1024 * 1024;
+
+
+        if (
+          file.size >
+          maxSize
+        ) {
+
+          alert(
+            "The resume must be smaller than 5MB."
+          );
+
+          this.value = "";
+
+          return;
+
+        }
+
+
+        fileName.textContent =
+          file.name;
+
+
+        selectedFile.style.display =
+          "flex";
+
+
+        uploadBox.classList.add(
+          "has-file"
+        );
+
+      }
+    );
+
+
+    /* =========================================================
+       DRAG & DROP
+    ========================================================= */
+
+    uploadBox.addEventListener(
+      "dragover",
+      function(event) {
+
+        event.preventDefault();
+
+        uploadBox.classList.add(
+          "dragging"
+        );
+
+      }
+    );
+
+
+    uploadBox.addEventListener(
+      "dragleave",
+      function() {
+
+        uploadBox.classList.remove(
+          "dragging"
+        );
+
+      }
+    );
+
+
+    uploadBox.addEventListener(
+      "drop",
+      function(event) {
+
+        event.preventDefault();
+
+        uploadBox.classList.remove(
+          "dragging"
+        );
+
+
+        const files =
+          event.dataTransfer.files;
+
+
+        if (!files.length) {
+          return;
+        }
+
+
+        const file =
+          files[0];
+
+
+        const allowedTypes = [
+
+          "application/pdf",
+
+          "application/msword",
+
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+
+        ];
+
+
+        const extension =
+          file.name
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+
+        if (
+          !allowedTypes.includes(
+            file.type
+          ) &&
+          !["pdf", "doc", "docx"].includes(
+            extension
+          )
+        ) {
+
+          alert(
+            "Please upload a PDF, DOC or DOCX file."
+          );
+
+          return;
+
+        }
+
+
+        if (
+          file.size >
+          5 * 1024 * 1024
+        ) {
+
+          alert(
+            "The resume must be smaller than 5MB."
+          );
+
+          return;
+
+        }
+
+
+        const dataTransfer =
+          new DataTransfer();
+
+
+        dataTransfer.items.add(
+          file
+        );
+
+
+        resumeInput.files =
+          dataTransfer.files;
+
+
+        fileName.textContent =
+          file.name;
+
+
+        selectedFile.style.display =
+          "flex";
+
+
+        uploadBox.classList.add(
+          "has-file"
+        );
+
+      }
+    );
+
+
+    /* =========================================================
+       GET ACTIVE FILTER FACTOR
+    ========================================================= */
+
+    function getFilterFactor(
+      filters
+    ) {
+
+      const factors = [];
+
+
+      const location =
+        findByValue(
+          locations,
+          filters.location
+        );
+
+      const type =
+        findByValue(
+          jobTypes,
+          filters.jobType
+        );
+
+      const experience =
+        findByValue(
+          experienceLevels,
+          filters.experience
+        );
+
+      const arrangement =
+        findByValue(
+          arrangements,
+          filters.arrangement
+        );
+
+
+      if (
+        location &&
+        location.value !== "all"
+      ) {
+
+        factors.push(
+          location.factor
+        );
+
+      }
+
+
+      if (
+        type &&
+        type.value !== "all"
+      ) {
+
+        factors.push(
+          type.factor
+        );
+
+      }
+
+
+      if (
+        experience &&
+        experience.value !== "all"
+      ) {
+
+        factors.push(
+          experience.factor
+        );
+
+      }
+
+
+      if (
+        arrangement &&
+        arrangement.value !== "all"
+      ) {
+
+        factors.push(
+          arrangement.factor
+        );
+
+      }
+
+
+      /* ---------------------------------------
+         SOURCES
+      --------------------------------------- */
+
+      if (
+        filters.sources.length > 0 &&
+        filters.sources.length < sources.length
+      ) {
+
+        const selectedSourceObjects =
+          filters.sources
+            .map(
+              value =>
+                getSource(value)
+            )
+            .filter(Boolean);
+
+
+        if (
+          selectedSourceObjects.length
+        ) {
+
+          const sourceFactor =
+            selectedSourceObjects.reduce(
+              function(
+                total,
+                source
+              ) {
+
+                return (
+                  total +
+                  source.factor
+                );
+
+              },
+              0
+            ) /
+            selectedSourceObjects.length;
+
+
+          factors.push(
+            sourceFactor
+          );
+
+        }
+
+      }
+
+
+      /*
+        If no filters are active,
+        keep the original count.
+      */
+
+      if (!factors.length) {
+        return 1;
+      }
+
+
+      /*
+        Average active factors instead of
+        multiplying all of them.
+
+        This prevents combinations from
+        collapsing to the artificial
+        60,001 minimum.
+      */
+
+      return (
+        factors.reduce(
+          function(
+            total,
+            factor
+          ) {
+
+            return total + factor;
+
+          },
+          0
+        ) /
+        factors.length
+      );
+
+    }
+
+
+    /* =========================================================
+       CALCULATE SIMULATED JOB COUNT
+    =========================================================
+
+       The prototype starts from the job's
+       base count and applies the average
+       of the active filter factors.
+
+       No artificial 60,001 floor is used.
+
+       The result can never exceed the
+       selected job's base count.
+
+       Later, replace this entire function
+       with your backend/API response.
+    ========================================================= */
+
+    function calculateJobCount(
+      job,
+      filters
+    ) {
+
+      if (!job) {
+        return 0;
+      }
+
+
+      const factor =
+        getFilterFactor(
+          filters
+        );
+
+
+      let count =
+        Math.floor(
+          job.count *
+          factor
+        );
+
+
+      count =
+        Math.min(
+          count,
+          job.count
+        );
+
+
+      return Math.max(
+        0,
+        count
+      );
+
+    }
+
+
+    /* =========================================================
+       BUILD FILTER TAGS
+    ========================================================= */
+
+    function buildFilterTags(
+      filters
+    ) {
+
+      filterTags.innerHTML = "";
+
+
+      const filterItems = [
+
+        {
+          label: "Location",
+          value:
+            formatLocation(
+              filters.location
+            )
+        },
+
+        {
+          label: "Type",
+          value:
+            formatJobType(
+              filters.jobType
+            )
+        },
+
+        {
+          label: "Experience",
+          value:
+            formatExperience(
+              filters.experience
+            )
+        },
+
+        {
+          label: "Arrangement",
+          value:
+            formatArrangement(
+              filters.arrangement
+            )
+        }
+
+      ];
+
+
+      const allSourcesSelected =
+        filters.sources.length ===
+        sources.length;
+
+
+      let sourceText =
+        "All job sources";
+
+
+      if (
+        !allSourcesSelected &&
+        filters.sources.length > 0
+      ) {
+
+        const selectedNames =
+          filters.sources.map(
+            function(value) {
+
+              const source =
+                getSource(value);
+
+              return source
+                ? source.name
+                : value;
+
+            }
+          );
+
+
+        sourceText =
+          selectedNames.join(
+            " + "
+          );
+
+      }
+
+
+      filterItems.push({
+
+        label: "Sources",
+
+        value: sourceText,
+
+        source: true
+
+      });
+
+
+      filterItems.forEach(
+        function(item) {
+
+          const tag =
+            document.createElement(
+              "span"
+            );
+
+
+          tag.className =
+            item.source
+              ? "filter-tag source"
+              : "filter-tag";
+
+
+          tag.textContent =
+            `${item.label}: ${item.value}`;
+
+
+          filterTags.appendChild(
+            tag
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       SET SEARCH BUTTON LOADING
+    ========================================================= */
+
+    function setSearchLoading(
+      loading
+    ) {
+
+      isSearching =
+        loading;
+
+
+      searchButton.disabled =
+        loading;
+
+
+      const icon =
+        document.querySelector(
+          ".search-button-icon"
+        );
+
+
+      if (loading) {
+
+        if (icon) {
+          icon.style.display = "none";
+        }
+
+
+        let spinner =
+          document.getElementById(
+            "searchButtonSpinner"
+          );
+
+
+        if (!spinner) {
+
+          spinner =
+            document.createElement(
+              "span"
+            );
+
+          spinner.className =
+            "button-spinner";
+
+          spinner.id =
+            "searchButtonSpinner";
+
+
+          searchButton.insertBefore(
+            spinner,
+            searchButtonText
+          );
+
+        }
+
+
+        searchButtonText.textContent =
+          "Searching...";
+
+      } else {
+
+        const spinner =
+          document.getElementById(
+            "searchButtonSpinner"
+          );
+
+
+        if (spinner) {
+          spinner.remove();
+        }
+
+
+        if (icon) {
+          icon.style.display = "";
+        }
+
+
+        searchButtonText.textContent =
+          "Search Jobs";
+
+      }
+
+    }
+
+
+    /* =========================================================
+       SHOW LOADING RESULTS
+    ========================================================= */
+
+    function showLoadingResults() {
+
+      resultsSection.classList.add(
+        "show"
+      );
+
+
+      resultsLoading.classList.add(
+        "show"
+      );
+
+
+      resultsContent.classList.remove(
+        "show"
+      );
+
+
+      setTimeout(
+        function() {
+
+          resultsSection.scrollIntoView({
+
+            behavior: "smooth",
+
+            block: "start"
+
+          });
+
+        },
+        50
+      );
+
+    }
+
+
+    /* =========================================================
+       UPDATE PURCHASE CONTROLS
+    ========================================================= */
+
+    function updatePurchaseControls() {
+
+      const maximum =
+        getMaximumPurchaseQuantity(
+          currentResultCount
+        );
+
+
+      if (
+        selectedJobQuantity <= 0 &&
+        maximum > 0
+      ) {
+
+        selectedJobQuantity =
+          getInitialPurchaseQuantity(
+            maximum
+          );
+
+      }
+
+
+      if (
+        selectedJobQuantity >
+        maximum
+      ) {
+
+        selectedJobQuantity =
+          maximum;
+
+      }
+
+
+      if (
+        selectedJobQuantity <= 0
+      ) {
+
+        quantityDisplay.textContent =
+          "No jobs available";
+
+        purchasePrice.textContent =
+          formatCurrency(0);
+
+        applyButtonText.textContent =
+          "No Jobs Available";
+
+        decreaseJobsButton.disabled =
+          true;
+
+        increaseJobsButton.disabled =
+          true;
+
+        applyAllButton.disabled =
+          true;
+
+        maximumJobsText.textContent =
+          "0";
+
+        return;
+
+      }
+
+
+      quantityDisplay.innerHTML =
+        `${formatNumber(
+          selectedJobQuantity
+        )} jobs
+
+        <span>
+          selected
+        </span>`;
+
+
+      maximumJobsText.textContent =
+        formatNumber(
+          maximum
+        );
+
+
+      purchasePrice.textContent =
+        formatCurrency(
+          calculatePrice(
+            selectedJobQuantity
+          )
+        );
+
+
+      applyButtonText.textContent =
+        `Pay ${formatCurrency(
+          calculatePrice(
+            selectedJobQuantity
+          )
+        )} & Apply`;
+
+
+      /*
+        Decrease:
+
+        If the selected quantity is above
+        1,000, decrease by 1,000.
+
+        If the total result is below 1,000,
+        the user can only select that
+        smaller quantity.
+      */
+
+      const minimumQuantity =
+        maximum < JOBS_PER_BATCH
+          ? maximum
+          : JOBS_PER_BATCH;
+
+
+      decreaseJobsButton.disabled =
+        selectedJobQuantity <=
+        minimumQuantity;
+
+
+      /*
+        Increase by 1,000, but never exceed
+        the actual number of jobs found.
+      */
+
+      increaseJobsButton.disabled =
+        selectedJobQuantity >=
+        maximum;
+
+
+      applyAllButton.disabled =
+        paymentInProgress;
+
+    }
+
+
+    /* =========================================================
+       QUANTITY BUTTONS
+    ========================================================= */
+
+    decreaseJobsButton.addEventListener(
+      "click",
+      function() {
+
+        if (
+          selectedJobQuantity <= 0
+        ) {
+          return;
+        }
+
+
+        const maximum =
+          currentResultCount;
+
+
+        if (
+          maximum < JOBS_PER_BATCH
+        ) {
+
+          /*
+            If fewer than 1,000 jobs were
+            found, the user can select all
+            available jobs but cannot reduce
+            below that amount.
+          */
+
+          selectedJobQuantity =
+            maximum;
+
+        } else {
+
+          selectedJobQuantity =
+            Math.max(
+              JOBS_PER_BATCH,
+              selectedJobQuantity -
+              JOBS_PER_BATCH
+            );
+
+        }
+
+
+        updatePurchaseControls();
+
+      }
+    );
+
+
+    increaseJobsButton.addEventListener(
+      "click",
+      function() {
+
+        if (
+          selectedJobQuantity >=
+          currentResultCount
+        ) {
+          return;
+        }
+
+
+        selectedJobQuantity =
+          Math.min(
+            currentResultCount,
+            selectedJobQuantity +
+            JOBS_PER_BATCH
+          );
+
+
+        updatePurchaseControls();
+
+      }
+    );
+
+
+    /* =========================================================
+       SHOW FINAL RESULTS
+    ========================================================= */
+
+    function showResults(
+      filters
+    ) {
+
+      const count =
+        calculateJobCount(
+          selectedJob,
+          filters
+        );
+
+
+      currentResultCount =
+        count;
+
+
+      selectedJobQuantity =
+        getInitialPurchaseQuantity(
+          count
+        );
+
+
+      resultCount.textContent =
+        `${formatNumber(
+          count
+        )} ${
+          count === 1
+            ? "job"
+            : "jobs"
+        } found`;
+
+
+      const allSourcesSelected =
+        filters.sources.length ===
+        sources.length;
+
+
+      if (
+        allSourcesSelected
+      ) {
+
+        resultsSummary.textContent =
+          "Matching opportunities across all selected job sources.";
+
+      } else {
+
+        const names =
+          filters.sources.map(
+            function(value) {
+
+              const source =
+                getSource(value);
+
+              return source
+                ? source.name
+                : value;
+
+            }
+          );
+
+
+        resultsSummary.textContent =
+          `Matching opportunities from ${names.join(", ")}.`;
+
+      }
+
+
+      summaryTitle.textContent =
+        selectedJob.title;
+
+
+      buildFilterTags(
+        filters
+      );
+
+
+      updatePurchaseControls();
+
+
+      paymentStatus.classList.remove(
+        "show"
+      );
+
+
+      resultsLoading.classList.remove(
+        "show"
+      );
+
+
+      resultsContent.classList.add(
+        "show"
+      );
+
+
+      setTimeout(
+        function() {
+
+          resultsSection.scrollIntoView({
+
+            behavior: "smooth",
+
+            block: "start"
+
+          });
+
+        },
+        80
+      );
+
+    }
+
+
+    /* =========================================================
+       SEARCH
+    ========================================================= */
+
+    searchForm.addEventListener(
+      "submit",
+      function(event) {
+
+        event.preventDefault();
+
+
+        if (isSearching) {
+          return;
+        }
+
+
+        if (
+          !resumeInput.files.length
+        ) {
+
+          alert(
+            "Please upload your resume before searching."
+          );
+
+          return;
+
+        }
+
+
+        if (!selectedJob) {
+
+          alert(
+            "Please select a job title from the available list."
+          );
+
+
+          jobDropdown.classList.add(
+            "open"
+          );
+
+
+          jobSearchInput.focus();
+
+
+          return;
+
+        }
+
+
+        if (
+          selectedSourceValues.length === 0
+        ) {
+
+          selectedSourceValues =
+            sources.map(
+              source =>
+                source.value
+            );
+
+
+          renderSourceOptions();
+
+          updateSourceDisplay();
+
+        }
+
+
+        const filters = {
+
+          location:
+            locationSelect.value,
+
+          jobType:
+            jobTypeSelect.value,
+
+          experience:
+            experienceSelect.value,
+
+          arrangement:
+            arrangementSelect.value,
+
+          sources:
+            [...selectedSourceValues]
+
+        };
+
+
+        setSearchLoading(
+          true
+        );
+
+
+        showLoadingResults();
+
+
+        setTimeout(
+          function() {
+
+            showResults(
+              filters
+            );
+
+
+            setSearchLoading(
+              false
+            );
+
+          },
+          1200
+        );
+
+      }
+    );
+
+
+    /* =========================================================
+       GENERATE TRANSACTION REFERENCE
+    ========================================================= */
+
+    function generateTransactionReference() {
+
+      return (
+        "Applikart-" +
+        Date.now() +
+        "-" +
+        Math.random()
+          .toString(36)
+          .substring(2, 10)
+      );
+
+    }
+
+
+    /* =========================================================
+       OPEN FLUTTERWAVE CHECKOUT
+    ========================================================= */
+
+    function openFlutterwaveCheckout() {
+
+      if (
+        paymentInProgress
+      ) {
+        return;
+      }
+
+
+      if (
+        currentResultCount <= 0 ||
+        selectedJobQuantity <= 0
+      ) {
+
+        return;
+
+      }
+
+
+      const amount =
+        calculatePrice(
+          selectedJobQuantity
+        );
+
+
+      const transactionReference =
+        generateTransactionReference();
+
+
+      paymentInProgress =
+        true;
+
+
+      applyAllButton.disabled =
+        true;
+
+
+      paymentStatus.textContent =
+        "Opening secure checkout...";
+
+
+      paymentStatus.classList.add(
+        "show"
+      );
+
+
+      /*
+        NOTE:
+
+        For a real production implementation,
+        customer details and the transaction
+        reference should be created/managed
+        by your backend.
+
+        For this static prototype, we use
+        placeholder customer information.
+      */
+
+      const checkout =
+        FlutterwaveCheckout({
+
+          public_key:
+            FLUTTERWAVE_PUBLIC_KEY,
+
+          tx_ref:
+            transactionReference,
+
+          amount:
+            amount,
+
+          currency:
+            "NGN",
+
+          payment_options:
+            "card,banktransfer,ussd",
+
+          customer: {
+
+            email:
+              "customer@example.com",
+
+            name:
+              "Applikart Customer",
+
+            phone_number:
+              "08000000000"
+
+          },
+
+          meta: {
+
+            job_title:
+              selectedJob
+                ? selectedJob.title
+                : "",
+
+            jobs_found:
+              currentResultCount,
+
+            jobs_selected:
+              selectedJobQuantity,
+
+            amount:
+              amount
+
+          },
+
+          customizations: {
+
+            title:
+              "Applikart",
+
+            description:
+              `Apply to ${formatNumber(
+                selectedJobQuantity
+              )} jobs`,
+
+            logo:
+              ""
+
+          },
+
+          callback:
+            function(payment) {
+
+              console.log(
+                "Flutterwave payment callback:",
+                payment
+              );
+
+
+              /*
+                Flutterwave's callback reports
+                the payment status.
+
+                For the prototype we show the
+                success modal here.
+
+                PRODUCTION:
+                Send payment.transaction_id
+                and payment.tx_ref to your
+                backend and verify the payment
+                server-side before submitting
+                applications.
+              */
+
+              if (
+                payment &&
+                payment.status ===
+                "successful"
+              ) {
+
+                paymentStatus.textContent =
+                  "Payment successful. Preparing your applications...";
+
+
+                modalMessage.textContent =
+                  `Your payment of ${
+                    formatCurrency(
+                      amount
+                    )
+                  } was successful. Your application for ${
+                    formatNumber(
+                      selectedJobQuantity
+                    )
+                  } ${
+                    selectedJob.title
+                  } ${
+                    selectedJobQuantity === 1
+                      ? "job"
+                      : "jobs"
+                  } has been sent.`;
+
+                successModal.classList.add(
+                  "show"
+                );
+
+
+                /*
+                  Keep this transaction data
+                  available for your future
+                  backend integration.
+                */
+
+                console.log(
+                  "Transaction reference:",
+                  payment.tx_ref
+                );
+
+                console.log(
+                  "Flutterwave transaction ID:",
+                  payment.transaction_id
+                );
+
+
+                /*
+                  Example future API call:
+
+                  fetch("/api/payments/verify", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type":
+                        "application/json"
+                    },
+                    body: JSON.stringify({
+                      tx_ref:
+                        payment.tx_ref,
+
+                      transaction_id:
+                        payment.transaction_id,
+
+                      jobs:
+                        selectedJobQuantity
+                    })
+                  });
+                */
+
+
+                paymentInProgress =
+                  false;
+
+
+                applyAllButton.disabled =
+                  false;
+
+
+                if (
+                  checkout &&
+                  typeof checkout.close ===
+                  "function"
+                ) {
+
+                  checkout.close();
+
+                }
+
+              }
+
+            },
+
+
+          onclose:
+            function() {
+
+              paymentInProgress =
+                false;
+
+
+              applyAllButton.disabled =
+                false;
+
+
+              /*
+                Only hide the payment status
+                if the success modal isn't
+                currently being displayed.
+              */
+
+              if (
+                !successModal.classList.contains(
+                  "show"
+                )
+              ) {
+
+                paymentStatus.classList.remove(
+                  "show"
+                );
+
+              }
+
+            }
+
+        });
+
+    }
+
+
+    /* =========================================================
+       APPLY / PAY BUTTON
+    ========================================================= */
+
+    applyAllButton.addEventListener(
+      "click",
+      function() {
+
+        if (
+          currentResultCount <= 0 ||
+          selectedJobQuantity <= 0 ||
+          paymentInProgress
+        ) {
+
+          return;
+
+        }
+
+
+        openFlutterwaveCheckout();
+
+      }
+    );
+
+
+    /* =========================================================
+       CLOSE SUCCESS MODAL
+    ========================================================= */
+
+    modalClose.addEventListener(
+      "click",
+      function() {
+
+        successModal.classList.remove(
+          "show"
+        );
+
+
+        paymentStatus.classList.remove(
+          "show"
+        );
+
+      }
+    );
+
+
+    /* =========================================================
+       CLOSE MODAL OUTSIDE
+    ========================================================= */
+
+    successModal.addEventListener(
+      "click",
+      function(event) {
+
+        if (
+          event.target ===
+          successModal
+        ) {
+
+          successModal.classList.remove(
+            "show"
+          );
+
+          paymentStatus.classList.remove(
+            "show"
+          );
+
+        }
+
+      }
+    );
+
+
+  </script>
+
+</body>
+</html>

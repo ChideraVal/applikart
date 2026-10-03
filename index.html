@@ -1,0 +1,2758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Applikart — Apply to Multiple Jobs at Once</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    /* =========================================
+       RESET
+    ========================================== */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      color: #101828;
+      background: #ffffff;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* =========================================
+       VARIABLES
+    ========================================== */
+
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #eff6ff;
+
+      --text: #101828;
+      --muted: #667085;
+
+      --border: #e4e7ec;
+      --soft: #f8fafc;
+
+      --success: #16a34a;
+
+      --radius: 18px;
+
+      --container: 1180px;
+    }
+
+    /* =========================================
+       GLOBAL
+    ========================================== */
+
+    .container {
+      width: min(100% - 40px, var(--container));
+      margin: 0 auto;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+
+      border: none;
+      border-radius: 10px;
+
+      padding: 12px 19px;
+
+      font-size: 14px;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .btn-primary {
+      color: #ffffff;
+      background: var(--primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-outline:hover {
+      background: #f9fafb;
+    }
+
+    /* =========================================
+       NAVBAR
+    ========================================== */
+
+    .navbar {
+      height: 76px;
+
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(15px);
+
+      border-bottom: 1px solid rgba(228, 231, 236, 0.8);
+    }
+
+    .nav-inner {
+      height: 100%;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+
+      display: grid;
+      place-items: center;
+
+      color: #ffffff;
+      background: var(--primary);
+
+      border-radius: 10px;
+    }
+
+    .logo-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #475467;
+
+      font-size: 13px;
+      font-weight: 600;
+
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+    }
+
+    /* =========================================
+       HERO
+    ========================================== */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+
+      padding: 92px 0 100px;
+
+      background:
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(219, 234, 254, 0.8),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 10% 80%,
+          rgba(239, 246, 255, 0.9),
+          transparent 28%
+        ),
+        #ffffff;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 0.9fr;
+
+      align-items: center;
+
+      gap: 70px;
+    }
+
+    .hero-content {
+      max-width: 650px;
+    }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      padding: 7px 12px;
+
+      color: var(--primary);
+      background: var(--primary-light);
+
+      border-radius: 999px;
+
+      font-size: 12px;
+      font-weight: 700;
+
+      margin-bottom: 22px;
+    }
+
+    .hero-label svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 5vw, 66px);
+
+      line-height: 1.06;
+
+      letter-spacing: -3px;
+
+      margin-bottom: 24px;
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero-description {
+      max-width: 570px;
+
+      color: var(--muted);
+
+      font-size: 17px;
+
+      line-height: 1.75;
+
+      margin-bottom: 31px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      margin-bottom: 23px;
+    }
+
+    .hero-actions .btn {
+      padding: 14px 21px;
+    }
+
+    .hero-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      color: var(--muted);
+
+      font-size: 12px;
+    }
+
+    .hero-note svg {
+      color: var(--success);
+      width: 16px;
+      height: 16px;
+    }
+
+    /* =========================================
+       HERO VISUAL
+    ========================================== */
+
+    .hero-visual {
+      min-height: 500px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      position: relative;
+    }
+
+    .search-dashboard {
+      width: 100%;
+      max-width: 490px;
+
+      padding: 22px;
+
+      background: #ffffff;
+
+      border: 1px solid var(--border);
+
+      border-radius: 22px;
+
+      box-shadow:
+        0 25px 70px rgba(16, 24, 40, 0.12);
+
+      position: relative;
+      z-index: 2;
+    }
+
+    .dashboard-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 18px;
+    }
+
+    .dashboard-title {
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .dashboard-status {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      color: var(--success);
+
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: #22c55e;
+    }
+
+    /* Search box */
+
+    .demo-search {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+
+      padding: 12px 13px;
+
+      background: #f8fafc;
+
+      border: 1px solid var(--border);
+
+      border-radius: 11px;
+
+      margin-bottom: 14px;
+    }
+
+    .demo-search svg {
+      width: 17px;
+      height: 17px;
+
+      color: #98a2b3;
+    }
+
+    .demo-search span {
+      font-size: 12px;
+      color: #344054;
+      font-weight: 600;
+    }
+
+    .demo-search .search-location {
+      margin-left: auto;
+
+      color: #98a2b3;
+
+      font-weight: 500;
+    }
+
+    /* Results */
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 4px 2px 14px;
+    }
+
+    .results-header strong {
+      font-size: 13px;
+    }
+
+    .results-header span {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .demo-job {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+
+      padding: 12px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 12px;
+
+      margin-bottom: 9px;
+    }
+
+    .company-logo {
+      width: 38px;
+      height: 38px;
+
+      display: grid;
+      place-items: center;
+
+      flex-shrink: 0;
+
+      background: #f2f4f7;
+
+      border-radius: 9px;
+
+      font-size: 11px;
+      font-weight: 800;
+
+      color: #344054;
+    }
+
+    .demo-job-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .demo-job-info strong {
+      display: block;
+
+      font-size: 11px;
+
+      margin-bottom: 2px;
+    }
+
+    .demo-job-info span {
+      display: block;
+
+      color: var(--muted);
+
+      font-size: 9px;
+    }
+
+    .job-check {
+      width: 22px;
+      height: 22px;
+
+      display: grid;
+      place-items: center;
+
+      color: #ffffff;
+
+      background: var(--primary);
+
+      border-radius: 50%;
+    }
+
+    .job-check svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* Apply all */
+
+    .apply-all-box {
+      margin-top: 15px;
+
+      padding: 14px;
+
+      border-radius: 12px;
+
+      background: var(--primary-light);
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 12px;
+    }
+
+    .apply-all-info strong {
+      display: block;
+
+      color: #1e3a8a;
+
+      font-size: 12px;
+    }
+
+    .apply-all-info span {
+      display: block;
+
+      color: #64748b;
+
+      font-size: 9px;
+    }
+
+    .apply-all-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+
+      padding: 9px 12px;
+
+      color: #ffffff;
+      background: var(--primary);
+
+      border: none;
+      border-radius: 8px;
+
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .apply-all-button svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    /* Floating cards */
+
+    .floating-card {
+      position: absolute;
+
+      background: #ffffff;
+
+      border: 1px solid var(--border);
+
+      border-radius: 13px;
+
+      box-shadow:
+        0 18px 45px rgba(16, 24, 40, 0.12);
+
+      z-index: 3;
+    }
+
+    .jobs-found {
+      right: -24px;
+      top: 58px;
+
+      padding: 13px 16px;
+    }
+
+    .jobs-found span {
+      display: block;
+
+      color: var(--muted);
+
+      font-size: 9px;
+
+      margin-bottom: 2px;
+    }
+
+    .jobs-found strong {
+      display: block;
+
+      color: var(--primary);
+
+      font-size: 21px;
+    }
+
+    .resume-uploaded {
+      left: -32px;
+      bottom: 52px;
+
+      padding: 12px 14px;
+
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .resume-icon {
+      width: 33px;
+      height: 33px;
+
+      display: grid;
+      place-items: center;
+
+      color: var(--primary);
+
+      background: var(--primary-light);
+
+      border-radius: 9px;
+    }
+
+    .resume-icon svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .resume-uploaded strong {
+      display: block;
+
+      font-size: 10px;
+    }
+
+    .resume-uploaded span {
+      display: block;
+
+      color: var(--muted);
+
+      font-size: 8px;
+    }
+
+    /* =========================================
+       TRUST
+    ========================================== */
+
+    .trust {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+
+      padding: 25px 0;
+
+      background: #ffffff;
+    }
+
+    .trust-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 25px;
+    }
+
+    .trust-text {
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+    .trust-companies {
+      display: flex;
+      align-items: center;
+
+      gap: 35px;
+
+      color: #98a2b3;
+
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    /* =========================================
+       SECTION HEADING
+    ========================================== */
+
+    section {
+      padding: 100px 0;
+    }
+
+    .section-heading {
+      max-width: 650px;
+
+      margin: 0 auto 55px;
+
+      text-align: center;
+    }
+
+    .section-label {
+      color: var(--primary);
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+      text-transform: uppercase;
+
+      letter-spacing: 1.2px;
+
+      margin-bottom: 10px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(30px, 4vw, 42px);
+
+      line-height: 1.15;
+
+      letter-spacing: -1.5px;
+
+      margin-bottom: 14px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+
+      font-size: 14px;
+
+      line-height: 1.7;
+    }
+
+    /* =========================================
+       HOW IT WORKS
+    ========================================== */
+
+    .how-it-works {
+      background: var(--soft);
+    }
+
+    .steps {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 22px;
+    }
+
+    .step {
+      background: #ffffff;
+
+      border: 1px solid var(--border);
+
+      border-radius: var(--radius);
+
+      padding: 29px;
+    }
+
+    .step-icon {
+      width: 47px;
+      height: 47px;
+
+      display: grid;
+      place-items: center;
+
+      color: var(--primary);
+
+      background: var(--primary-light);
+
+      border-radius: 12px;
+
+      margin-bottom: 21px;
+    }
+
+    .step-icon svg {
+      width: 21px;
+      height: 21px;
+    }
+
+    .step-number {
+      color: #98a2b3;
+
+      font-size: 10px;
+      font-weight: 800;
+
+      margin-bottom: 7px;
+    }
+
+    .step h3 {
+      font-size: 17px;
+
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      color: var(--muted);
+
+      font-size: 13px;
+
+      line-height: 1.7;
+    }
+
+    /* =========================================
+       FEATURES
+    ========================================== */
+
+    .features-grid {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 20px;
+    }
+
+    .feature {
+      padding: 27px;
+
+      border: 1px solid var(--border);
+
+      border-radius: var(--radius);
+
+      transition: 0.25s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-4px);
+
+      box-shadow:
+        0 15px 35px rgba(16, 24, 40, 0.07);
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+
+      display: grid;
+      place-items: center;
+
+      color: var(--primary);
+
+      background: var(--primary-light);
+
+      border-radius: 11px;
+
+      margin-bottom: 18px;
+    }
+
+    .feature-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .feature h3 {
+      font-size: 16px;
+
+      margin-bottom: 7px;
+    }
+
+    .feature p {
+      color: var(--muted);
+
+      font-size: 13px;
+
+      line-height: 1.7;
+    }
+
+    /* =========================================
+       TESTIMONIALS
+    ========================================== */
+
+    .testimonials {
+      background: var(--soft);
+    }
+
+    .testimonial-grid {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 20px;
+    }
+
+    .testimonial {
+      background: #ffffff;
+
+      border: 1px solid var(--border);
+
+      border-radius: var(--radius);
+
+      padding: 25px;
+    }
+
+    .stars {
+      display: flex;
+      gap: 2px;
+
+      color: #f59e0b;
+
+      margin-bottom: 16px;
+    }
+
+    .stars svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    .testimonial-text {
+      color: #344054;
+
+      font-size: 13px;
+
+      line-height: 1.8;
+
+      margin-bottom: 22px;
+    }
+
+    .person {
+      display: flex;
+      align-items: center;
+
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+
+      display: grid;
+      place-items: center;
+
+      color: var(--primary);
+
+      background: var(--primary-light);
+
+      border-radius: 50%;
+
+      font-size: 10px;
+
+      font-weight: 800;
+    }
+
+    .person strong {
+      display: block;
+
+      font-size: 11px;
+    }
+
+    .person span {
+      display: block;
+
+      color: var(--muted);
+
+      font-size: 9px;
+    }
+
+    /* =========================================
+       CTA
+    ========================================== */
+
+    .cta-section {
+      padding: 90px 0;
+    }
+
+    .cta {
+      position: relative;
+
+      overflow: hidden;
+
+      padding: 70px 30px;
+
+      color: #ffffff;
+
+      background: var(--primary);
+
+      border-radius: 24px;
+
+      text-align: center;
+    }
+
+    .cta::before {
+      content: "";
+
+      position: absolute;
+
+      width: 350px;
+      height: 350px;
+
+      border: 1px solid rgba(255, 255, 255, 0.12);
+
+      border-radius: 50%;
+
+      top: -190px;
+      right: -80px;
+    }
+
+    .cta::after {
+      content: "";
+
+      position: absolute;
+
+      width: 260px;
+      height: 260px;
+
+      border: 1px solid rgba(255, 255, 255, 0.1);
+
+      border-radius: 50%;
+
+      bottom: -160px;
+      left: -70px;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 2;
+
+      max-width: 650px;
+
+      margin: auto;
+    }
+
+    .cta h2 {
+      font-size: clamp(30px, 4vw, 42px);
+
+      line-height: 1.15;
+
+      letter-spacing: -1.3px;
+
+      margin-bottom: 14px;
+    }
+
+    .cta p {
+      color: #dbeafe;
+
+      font-size: 14px;
+
+      margin-bottom: 27px;
+    }
+
+    .cta .btn {
+      background: #ffffff;
+      color: var(--primary);
+
+      padding: 14px 22px;
+    }
+
+    .cta .btn:hover {
+      background: #f8fafc;
+
+      transform: translateY(-2px);
+    }
+
+    /* =========================================
+       FOOTER
+    ========================================== */
+
+    footer {
+      border-top: 1px solid var(--border);
+
+      padding: 60px 0 25px;
+    }
+
+    .footer-grid {
+      display: grid;
+
+      grid-template-columns: 1.5fr repeat(3, 1fr);
+
+      gap: 45px;
+
+      padding-bottom: 50px;
+    }
+
+    .footer-brand p {
+      max-width: 300px;
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      line-height: 1.8;
+
+      margin-top: 14px;
+    }
+
+    .footer-column h4 {
+      font-size: 12px;
+
+      margin-bottom: 16px;
+    }
+
+    .footer-column ul {
+      list-style: none;
+
+      display: grid;
+
+      gap: 10px;
+    }
+
+    .footer-column a {
+      color: var(--muted);
+
+      font-size: 12px;
+
+      transition: color 0.2s ease;
+    }
+
+    .footer-column a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+
+      padding-top: 22px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      color: var(--muted);
+
+      font-size: 10px;
+    }
+
+    .socials {
+      display: flex;
+
+      gap: 8px;
+    }
+
+    .socials a {
+      width: 30px;
+      height: 30px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid var(--border);
+
+      border-radius: 8px;
+
+      color: #667085;
+    }
+
+    .socials svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* =========================================
+       RESPONSIVE
+    ========================================== */
+
+    @media (max-width: 950px) {
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+
+        gap: 60px;
+      }
+
+      .hero-content {
+        max-width: 720px;
+
+        margin: auto;
+
+        text-align: center;
+      }
+
+      .hero-description {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .hero-note {
+        justify-content: center;
+      }
+
+      .hero-visual {
+        min-height: 450px;
+      }
+
+      .steps,
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .testimonial-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .trust-inner {
+        flex-direction: column;
+
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 700px) {
+
+      .container {
+        width: min(100% - 28px, var(--container));
+      }
+
+      .navbar {
+        height: 68px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-actions {
+        display: flex;
+      }
+
+      .nav-actions .btn {
+        padding: 9px 14px;
+
+        font-size: 12px;
+      }
+
+      .hero {
+        padding: 65px 0 75px;
+      }
+
+      .hero h1 {
+        letter-spacing: -2px;
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
+
+      .hero-visual {
+        min-height: 370px;
+      }
+
+      .search-dashboard {
+        padding: 15px;
+      }
+
+      .floating-card {
+        transform: scale(0.88);
+      }
+
+      .jobs-found {
+        right: -12px;
+        top: 20px;
+      }
+
+      .resume-uploaded {
+        left: -12px;
+        bottom: 20px;
+      }
+
+      .trust-companies {
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 16px 25px;
+      }
+
+      section {
+        padding: 75px 0;
+      }
+
+      .steps,
+      .features-grid,
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 35px 25px;
+      }
+
+      .footer-brand {
+        grid-column: 1 / -1;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+
+        gap: 17px;
+
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 430px) {
+
+      .hero-visual {
+        min-height: 350px;
+      }
+
+      .floating-card {
+        transform: scale(0.78);
+      }
+
+      .jobs-found {
+        right: -20px;
+      }
+
+      .resume-uploaded {
+        left: -20px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-brand {
+        grid-column: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================================
+       NAVBAR
+  ========================================== -->
+
+  <header class="navbar">
+
+    <div class="container nav-inner">
+
+      <a href="#" class="logo">
+
+        <span class="logo-icon">
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 4v16"></path>
+            <path d="M5 4h9a4 4 0 0 1 0 8H5"></path>
+          </svg>
+
+        </span>
+
+        Applikart
+
+      </a>
+
+
+      <nav>
+
+        <ul class="nav-links">
+
+          <li>
+            <a href="#how-it-works">How It Works</a>
+          </li>
+
+          <li>
+            <a href="#features">Features</a>
+          </li>
+
+          <li>
+            <a href="#testimonials">Testimonials</a>
+          </li>
+
+        </ul>
+
+      </nav>
+
+
+      <!--
+        There is intentionally no Sign In button
+        because this concept does not require authentication.
+      -->
+
+      <div class="nav-actions">
+
+        <a href="apply.html" class="btn btn-primary">
+
+          Get Started
+
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 12h14"></path>
+            <path d="m13 6 6 6-6 6"></path>
+          </svg>
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <main>
+
+    <!-- =========================================
+         HERO
+    ========================================== -->
+
+    <section class="hero">
+
+      <div class="container hero-grid">
+
+        <div class="hero-content">
+
+          <div class="hero-label">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M20 7h-9"></path>
+              <path d="M20 12h-9"></path>
+              <path d="M20 17h-9"></path>
+              <path d="M4 7h.01"></path>
+              <path d="M4 12h.01"></path>
+              <path d="M4 17h.01"></path>
+            </svg>
+
+            Apply once. Reach more opportunities.
+
+          </div>
+
+
+          <h1>
+            Search and apply to multiple jobs
+            <span>at once.</span>
+          </h1>
+
+
+          <p class="hero-description">
+            Upload your resume, tell us what job you're looking for,
+            choose your preferences, and discover how many matching
+            opportunities are available — then apply to them all at once.
+          </p>
+
+
+          <div class="hero-actions">
+
+            <a href="apply.html" class="btn btn-primary">
+
+              Start Applying
+
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14"></path>
+                <path d="m13 6 6 6-6 6"></path>
+              </svg>
+
+            </a>
+
+
+            <a href="#how-it-works" class="btn btn-outline">
+
+              How It Works
+
+            </a>
+
+          </div>
+
+
+          <div class="hero-note">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+
+            Upload once. Search once. Apply to multiple jobs.
+
+          </div>
+
+        </div>
+
+
+        <!-- =====================================
+             HERO PRODUCT PREVIEW
+        ====================================== -->
+
+        <div class="hero-visual">
+
+          <div class="search-dashboard">
+
+            <div class="dashboard-top">
+
+              <span class="dashboard-title">
+                Find your next job
+              </span>
+
+              <span class="dashboard-status">
+
+                <span class="status-dot"></span>
+
+                Ready to search
+
+              </span>
+
+            </div>
+
+
+            <!-- Search -->
+
+            <div class="demo-search">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m20 20-4-4"></path>
+              </svg>
+
+              <span>Graphic Designer</span>
+
+              <span class="search-location">
+                Remote
+              </span>
+
+            </div>
+
+
+            <!-- Results -->
+
+            <div class="results-header">
+
+              <strong>
+                68,793 jobs found
+              </strong>
+
+              <span>
+                Matching your search
+              </span>
+
+            </div>
+
+
+            <!-- <div class="demo-job">
+
+              <div class="company-logo">
+                TN
+              </div>
+
+              <div class="demo-job-info">
+
+                <strong>
+                  Frontend Developer
+                </strong>
+
+                <span>
+                  TechNova · Remote
+                </span>
+
+              </div>
+
+              <div class="job-check">
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m5 12 4 4L19 6"></path>
+                </svg>
+
+              </div>
+
+            </div>
+
+
+            <div class="demo-job">
+
+              <div class="company-logo">
+                FS
+              </div>
+
+              <div class="demo-job-info">
+
+                <strong>
+                  Frontend Engineer
+                </strong>
+
+                <span>
+                  FinStack · Remote
+                </span>
+
+              </div>
+
+              <div class="job-check">
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m5 12 4 4L19 6"></path>
+                </svg>
+
+              </div>
+
+            </div>
+
+
+            <div class="demo-job">
+
+              <div class="company-logo">
+                DC
+              </div>
+
+              <div class="demo-job-info">
+
+                <strong>
+                  React Developer
+                </strong>
+
+                <span>
+                  DevCore · Remote
+                </span>
+
+              </div>
+
+              <div class="job-check">
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m5 12 4 4L19 6"></path>
+                </svg>
+
+              </div>
+
+            </div>
+
+
+            <div class="demo-job">
+
+              <div class="company-logo">
+                NX
+              </div>
+
+              <div class="demo-job-info">
+
+                <strong>
+                  UI Developer
+                </strong>
+
+                <span>
+                  NextLabs · Remote
+                </span>
+
+              </div>
+
+              <div class="job-check">
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m5 12 4 4L19 6"></path>
+                </svg>
+
+              </div>
+
+            </div> -->
+
+
+            <!-- Apply All -->
+
+            <div class="apply-all-box">
+
+              <div class="apply-all-info">
+
+                <strong>
+                  68,793 matching jobs
+                </strong>
+
+                <span>
+                  Your uploaded resume will be used
+                </span>
+
+              </div>
+
+              <button class="apply-all-button">
+
+                Apply to All
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M5 12h14"></path>
+                  <path d="m13 6 6 6-6 6"></path>
+                </svg>
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- Jobs found -->
+
+          <div class="floating-card jobs-found">
+
+            <span>
+              Matching jobs
+            </span>
+
+            <strong>
+              68,793
+            </strong>
+
+          </div>
+
+
+          <!-- Resume -->
+
+          <div class="floating-card resume-uploaded">
+
+            <div class="resume-icon">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <path d="M14 2v6h6"></path>
+                <path d="M8 13h8"></path>
+                <path d="M8 17h5"></path>
+              </svg>
+
+            </div>
+
+            <div>
+
+              <strong>
+                Resume uploaded
+              </strong>
+
+              <span>
+                resume.pdf
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         TRUST
+    ========================================== -->
+
+    <section class="trust">
+
+      <div class="container trust-inner">
+
+        <span class="trust-text">
+          Search across job sites like
+        </span>
+
+        <div class="trust-companies">
+
+          <span>LinkedIn</span>
+          <span>Indeed</span>
+          <span>Glassdoor</span>
+          <span>SimplyHired</span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         HOW IT WORKS
+    ========================================== -->
+
+    <section class="how-it-works" id="how-it-works">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div class="section-label">
+            How it works
+          </div>
+
+          <h2>
+            One simple process for multiple applications
+          </h2>
+
+          <p>
+            Stop repeating the same application process for every
+            job. Search for what you want and apply to the matching
+            opportunities together.
+          </p>
+
+        </div>
+
+
+        <div class="steps">
+
+          <!-- Step 1 -->
+
+          <div class="step">
+
+            <div class="step-icon">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <path d="M14 2v6h6"></path>
+                <path d="M8 13h8"></path>
+                <path d="M8 17h5"></path>
+              </svg>
+
+            </div>
+
+            <div class="step-number">
+              STEP 01
+            </div>
+
+            <h3>
+              Upload your resume
+            </h3>
+
+            <p>
+              Add your resume once. This is the resume we'll
+              use when submitting your applications.
+            </p>
+
+          </div>
+
+
+          <!-- Step 2 -->
+
+          <div class="step">
+
+            <div class="step-icon">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m20 20-4-4"></path>
+              </svg>
+
+            </div>
+
+            <div class="step-number">
+              STEP 02
+            </div>
+
+            <h3>
+              Search for jobs
+            </h3>
+
+            <p>
+              Enter the job title you want and choose filters
+              such as location and job type.
+            </p>
+
+          </div>
+
+
+          <!-- Step 3 -->
+
+          <div class="step">
+
+            <div class="step-icon">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M22 2 11 13"></path>
+                <path d="m22 2-7 20-4-9-9-4Z"></path>
+              </svg>
+
+            </div>
+
+            <div class="step-number">
+              STEP 03
+            </div>
+
+            <h3>
+              Apply to them all
+            </h3>
+
+            <p>
+              See exactly how many jobs match your search and
+              apply to all of them using your uploaded resume.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         FEATURES
+    ========================================== -->
+
+    <section id="features">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div class="section-label">
+            Features
+          </div>
+
+          <h2>
+            Built around one simple idea
+          </h2>
+
+          <p>
+            Make searching for multiple opportunities and
+            applying to them much less repetitive.
+          </p>
+
+        </div>
+
+
+        <div class="features-grid">
+
+          <!-- Feature 1 -->
+
+          <div class="feature">
+
+            <div class="feature-icon">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m20 20-4-4"></path>
+              </svg>
+
+            </div>
+
+            <h3>
+              Smart Job Search
+            </h3>
+
+            <p>
+              Search by the exact job title you're interested
+              in and narrow your results using useful filters.
+            </p>
+
+          </div>
+
+
+          <!-- Feature 2 -->
+
+          <div class="feature">
+
+            <div class="feature-icon">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <path d="M14 2v6h6"></path>
+                <path d="M8 13h8"></path>
+                <path d="M8 17h5"></path>
+              </svg>
+
+            </div>
+
+            <h3>
+              Upload Once
+            </h3>
+
+            <p>
+              Upload your resume once and use it across all
+              the matching jobs from your search.
+            </p>
+
+          </div>
+
+
+          <!-- Feature 3 -->
+
+          <div class="feature">
+
+            <div class="feature-icon">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M8 6h13"></path>
+                <path d="M8 12h13"></path>
+                <path d="M8 18h13"></path>
+                <path d="M3 6h.01"></path>
+                <path d="M3 12h.01"></path>
+                <path d="M3 18h.01"></path>
+              </svg>
+
+            </div>
+
+            <h3>
+              See Your Results
+            </h3>
+
+            <p>
+              Know exactly how many opportunities match your
+              search before you decide to apply.
+            </p>
+
+          </div>
+
+
+          <!-- Feature 4 -->
+
+          <div class="feature">
+
+            <div class="feature-icon">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 7h-9"></path>
+                <path d="M20 12h-9"></path>
+                <path d="M20 17h-9"></path>
+                <path d="M4 7h.01"></path>
+                <path d="M4 12h.01"></path>
+                <path d="M4 17h.01"></path>
+              </svg>
+
+            </div>
+
+            <h3>
+              Useful Filters
+            </h3>
+
+            <p>
+              Filter opportunities by location, job type,
+              experience level and other preferences.
+            </p>
+
+          </div>
+
+
+          <!-- Feature 5 -->
+
+          <div class="feature">
+
+            <div class="feature-icon">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M22 2 11 13"></path>
+                <path d="m22 2-7 20-4-9-9-4Z"></path>
+              </svg>
+
+            </div>
+
+            <h3>
+              Apply to All
+            </h3>
+
+            <p>
+              Instead of opening every job individually,
+              submit your application to the matching jobs together.
+            </p>
+
+          </div>
+
+
+          <!-- Feature 6 -->
+
+          <div class="feature">
+
+            <div class="feature-icon">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 2v20"></path>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+
+            </div>
+
+            <h3>
+              Save Time
+            </h3>
+
+            <p>
+              Reduce the repetitive work involved in applying
+              to several similar job opportunities.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         TESTIMONIALS
+    ========================================== -->
+
+    <section class="testimonials" id="testimonials">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div class="section-label">
+            Testimonials
+          </div>
+
+          <h2>
+            Built for people who want to apply faster
+          </h2>
+
+          <p>
+            Sample testimonials for the website prototype.
+          </p>
+
+        </div>
+
+
+        <div class="testimonial-grid">
+
+          <!-- 1 -->
+
+          <div class="testimonial">
+
+            <div class="stars">
+
+              <svg viewBox="0 0 24 24">
+                <path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path>
+              </svg>
+
+              <svg viewBox="0 0 24 24">
+                <path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path>
+              </svg>
+
+              <svg viewBox="0 0 24 24">
+                <path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path>
+              </svg>
+
+              <svg viewBox="0 0 24 24">
+                <path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path>
+              </svg>
+
+              <svg viewBox="0 0 24 24">
+                <path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path>
+              </svg>
+
+            </div>
+
+            <p class="testimonial-text">
+              "Instead of repeating the same application process
+              over and over, I can search once and apply to all
+              the matching opportunities."
+            </p>
+
+            <div class="person">
+
+              <div class="avatar">
+                JD
+              </div>
+
+              <div>
+                <strong>James Davis</strong>
+                <span>Frontend Developer</span>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- 2 -->
+
+          <div class="testimonial">
+
+            <div class="stars">
+
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+
+            </div>
+
+            <p class="testimonial-text">
+              "The number of matching jobs is shown before I
+              apply, which makes it much easier to decide when
+              a search is worth pursuing."
+            </p>
+
+            <div class="person">
+
+              <div class="avatar">
+                AM
+              </div>
+
+              <div>
+                <strong>Amara Mike</strong>
+                <span>Digital Marketer</span>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- 3 -->
+
+          <div class="testimonial">
+
+            <div class="stars">
+
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+
+            </div>
+
+            <p class="testimonial-text">
+              "I like that I don't have to choose jobs one by one.
+              I can define what I'm looking for and apply to the
+              matching jobs together."
+            </p>
+
+            <div class="person">
+
+              <div class="avatar">
+                RK
+              </div>
+
+              <div>
+                <strong>Ryan King</strong>
+                <span>Software Engineer</span>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- 4 -->
+
+          <div class="testimonial">
+
+            <div class="stars">
+
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+
+            </div>
+
+            <p class="testimonial-text">
+              "The whole idea is straightforward. Tell it what
+              kind of job you're looking for, see the opportunities
+              available, and apply."
+            </p>
+
+            <div class="person">
+
+              <div class="avatar">
+                SO
+              </div>
+
+              <div>
+                <strong>Sarah Okafor</strong>
+                <span>Product Designer</span>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- 5 -->
+
+          <div class="testimonial">
+
+            <div class="stars">
+
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+
+            </div>
+
+            <p class="testimonial-text">
+              "Uploading my resume once and using it for multiple
+              applications makes the process feel much less
+              repetitive."
+            </p>
+
+            <div class="person">
+
+              <div class="avatar">
+                DO
+              </div>
+
+              <div>
+                <strong>Daniel Obi</strong>
+                <span>Data Analyst</span>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- 6 -->
+
+          <div class="testimonial">
+
+            <div class="stars">
+
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"></path></svg>
+
+            </div>
+
+            <p class="testimonial-text">
+              "It gives me a clear idea of how many jobs match
+              what I'm searching for before I submit anything.
+              That's exactly what I wanted."
+            </p>
+
+            <div class="person">
+
+              <div class="avatar">
+                EN
+              </div>
+
+              <div>
+                <strong>Emily Nelson</strong>
+                <span>Content Specialist</span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         CTA
+    ========================================== -->
+
+    <section class="cta-section">
+
+      <div class="container">
+
+        <div class="cta">
+
+          <div class="cta-content">
+
+            <h2>
+              Your next job search can start with one click.
+            </h2>
+
+            <p>
+              Upload your resume, tell us what you're looking for,
+              and apply to multiple matching jobs at once.
+            </p>
+
+            <a href="apply.html" class="btn">
+
+              Get Started
+
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14"></path>
+                <path d="m13 6 6 6-6 6"></path>
+              </svg>
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================================
+       FOOTER
+  ========================================== -->
+
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+
+          <a href="#" class="logo">
+
+            <span class="logo-icon">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 4v16"></path>
+                <path d="M5 4h9a4 4 0 0 1 0 8H5"></path>
+              </svg>
+
+            </span>
+
+            Applikart
+
+          </a>
+
+          <p>
+            Search for the jobs you want and apply to multiple
+            matching opportunities using your resume.
+          </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+          <h4>Product</h4>
+
+          <ul>
+
+            <li>
+              <a href="#how-it-works">
+                How It Works
+              </a>
+            </li>
+
+            <li>
+              <a href="#features">
+                Features
+              </a>
+            </li>
+
+            <li>
+              <a href="apply.html">
+                Apply Now
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+
+        <div class="footer-column">
+
+          <h4>Company</h4>
+
+          <ul>
+
+            <li>
+              <a href="#">
+                About
+              </a>
+            </li>
+
+            <li>
+              <a href="#">
+                Contact
+              </a>
+            </li>
+
+            <li>
+              <a href="#">
+                Careers
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+
+        <div class="footer-column">
+
+          <h4>Legal</h4>
+
+          <ul>
+
+            <li>
+              <a href="#">
+                Privacy
+              </a>
+            </li>
+
+            <li>
+              <a href="#">
+                Terms
+              </a>
+            </li>
+
+            <li>
+              <a href="#">
+                Cookies
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+
+      <div class="footer-bottom">
+
+        <span>
+          © 2026 Applikart. All rights reserved.
+        </span>
+
+
+        <div class="socials">
+
+          <a href="#" aria-label="X">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 4 19 20"></path>
+              <path d="M19 4 5 20"></path>
+            </svg>
+
+          </a>
+
+
+          <a href="#" aria-label="LinkedIn">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M16 8a6 6 0 0 1 6 6v6"></path>
+              <path d="M2 9h4v11H2z"></path>
+              <path d="M4 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"></path>
+              <path d="M10 20V9h4"></path>
+            </svg>
+
+          </a>
+
+
+          <a href="#" aria-label="Facebook">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg>
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+</body>
+</html>
